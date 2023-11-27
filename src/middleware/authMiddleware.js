@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 export const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
- 
+
   if (!token) {
     return res
       .status(401)
@@ -9,9 +9,10 @@ export const authMiddleware = (req, res, next) => {
   }
   try {
     const decodedUser = jwt.verify(token, "123");
-    req.user = decodedUser
+    req.user = decodedUser;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized - Invalid token" });
+    // return res.status(401).json({ message: "Unauthorized - Invalid token" });
+    next(error)
   }
 };
