@@ -1,6 +1,7 @@
 import express from "express";
 import dataRoutes from "./routes/dataRoutes.js";
 import fs from "fs";
+import { errorHandlingMiddleware } from "./middleware/errorHandlingMiddleware.js";
 const app = express();
 app.use(express.json());
 
@@ -15,6 +16,8 @@ app.post("/api", function (req, res) {
 });
 
 app.use("/data", dataRoutes);
+
+app.use(errorHandlingMiddleware);
 
 app.listen(4000, () => {
   console.log("serveris running at port 4000");
