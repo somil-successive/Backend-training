@@ -29,15 +29,7 @@ dataRouter.post(
   customLogsMiddleware,
   postData
 );
-dataRouter.post(
-  "/login",
-  dynamicValidationMiddleware,
-  login
-);
-dataRouter.post(
-  "/register",
-  dynamicValidationMiddleware,
-  register
-);
+dataRouter.post("/login", dynamicValidationMiddleware, login);
+dataRouter.post("/register", dynamicValidationMiddleware, register);
 
 export default dataRouter;
