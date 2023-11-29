@@ -9,12 +9,14 @@ import { geoLocMiddleware } from "../middleware/geoLocMiddleware.js";
 import { dynamicValidationMiddleware } from "../middleware/dynamicValidationMiddleware.js";
 import { login } from "../controllers/loginController.js";
 import { register } from "../controllers/registerController.js";
-import {  asyncData } from "../controllers/asyncController.js";
+import { asyncData } from "../controllers/asyncController.js";
+import { paramValidationMiddleware } from "../middleware/paramValidationMiddleware.js";
 
 const dataRouter = express.Router();
 
 dataRouter.get(
   "/get",
+  paramValidationMiddleware,
   geoLocMiddleware,
   limitingReqMiddleware,
   customHeaderMiddleware({ content: "Text" }),
@@ -28,10 +30,11 @@ dataRouter.post(
   limitingReqMiddleware,
   customHeaderMiddleware({ content: "Html" }),
   customLogsMiddleware,
+
   postData
 );
-dataRouter.post("/login", dynamicValidationMiddleware, login);
+dataRouter.post("/login", login);
 dataRouter.post("/register", dynamicValidationMiddleware, register);
-dataRouter.get("/async",asyncData)
+dataRouter.get("/async", asyncData);
 
 export default dataRouter;
