@@ -1,4 +1,7 @@
-Operations,Num1,Num2,Resultnod
-Addition,10,5,15
-Subtraction,15,5,10
-Division,15,5,3
+Operations,Num1,Num2,Result
+Addition,-1,1,0
+addition,-1,1,-1
+addition,-1,1,0
+addition,-1,1,0
+additn,-1,1,0
+addition,-1,10,9
