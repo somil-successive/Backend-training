@@ -29,7 +29,7 @@ if (operation === arithmeticOperations.add) {
   result += divisionOfNumber;
 } else {
   console.log("Enter Valid Operation");
-  process.exit(0)
+  process.exit(0);
 }
 
 if (fs.existsSync("MathsOperationResult.csv")) {
