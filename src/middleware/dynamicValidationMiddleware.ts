@@ -1,6 +1,7 @@
 import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import {Request,Response,NextFunction} from 'express';
 
-export const dynamicValidationMiddleware = (req, res, next) => {
+export const dynamicValidationMiddleware = (req:Request, res:Response, next:NextFunction) => {
   const path = req.url;
   console.log(path);
   const user = req.body;
