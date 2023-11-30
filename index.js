@@ -13,24 +13,26 @@ const arithmeticOperations = {
   div: "division",
 };
 
-let result = 0;
+const performCalculation = () => {
+  if (operation === arithmeticOperations.add) {
+    const sumOfNumber = add(num1, num2);
+    return sumOfNumber;
+  } else if (operation === arithmeticOperations.sub) {
+    const subtractionOfNumber = sub(num1, num2);
+    return subtractionOfNumber;
+  } else if (operation === arithmeticOperations.mul) {
+    const multiplicationOfNumbers = mult(num1, num2);
+    result += multiplicationOfNumbers;
+  } else if (operation === arithmeticOperations.div) {
+    const divisionOfNumber = div(num1, num2);
+    result += divisionOfNumber;
+  } else {
+    console.log("Enter Valid Operation");
+    process.exit(0);
+  }
+};
 
-if (operation === arithmeticOperations.add) {
-  const sumOfNumber = add(num1, num2);
-  result += sumOfNumber;
-} else if (operation === arithmeticOperations.sub) {
-  const subtractionOfNumber = sub(num1, num2);
-  result += subtractionOfNumber;
-} else if (operation === arithmeticOperations.mul) {
-  const multiplicationOfNumbers = mult(num1, num2);
-  result += multiplicationOfNumbers;
-} else if (operation === arithmeticOperations.div) {
-  const divisionOfNumber = div(num1, num2);
-  result += divisionOfNumber;
-} else {
-  console.log("Enter Valid Operation");
-  process.exit(0);
-}
+const result = performCalculation();
 
 if (fs.existsSync("MathsOperationResult.csv")) {
   fs.appendFile(
@@ -46,7 +48,7 @@ if (fs.existsSync("MathsOperationResult.csv")) {
 } else {
   fs.appendFile(
     "MathsOperationResult.csv",
-    `Operations,Num1,Num2,Result\n${operation},${num1},${num2},${sumOfNumber}\n`,
+    `Operations,Num1,Num2,Result\n${operation},${num1},${num2},${result}\n`,
     (err) => {
       if (err) console.log(err);
       console.log(
