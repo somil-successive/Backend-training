@@ -9,6 +9,7 @@ import { geoLocMiddleware } from "../middleware/geoLocMiddleware.js";
 import { dynamicValidationMiddleware } from "../middleware/dynamicValidationMiddleware.js";
 import { login } from "../controllers/loginController.js";
 import { register } from "../controllers/registerController.js";
+import { validationMiddleware } from "../middleware/validationMiddleware.js";
 
 const dataRouter = express.Router();
 
@@ -27,6 +28,7 @@ dataRouter.post(
   limitingReqMiddleware,
   customHeaderMiddleware({ content: "Html" }),
   customLogsMiddleware,
+  validationMiddleware,
   postData
 );
 dataRouter.post("/login", dynamicValidationMiddleware, login);
