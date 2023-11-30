@@ -7,7 +7,8 @@ export const limitingReqMiddleware = (
 ) => {
   let count = 0;
   let limit = 5;
-  let time, time1;
+  let time: number,
+    time1: number = 0;
   if (count === 0) {
     time1 = new Date().getSeconds();
     time = new Date().getSeconds();

@@ -1,6 +1,5 @@
-import {Request,Response} from 'express';
+import { Request, Response } from "express";
 
-export const register = (req:Request, res:Response) => {
-  console.log(req.user);
+export const register = (req: Request, res: Response) => {
   res.json("Registered Successfully");
 };

@@ -3,7 +3,8 @@ export const dynamicValidationMiddleware = (req, res, next) => {
     const path = req.url;
     console.log(path);
     const user = req.body;
-    let { value, error } = {};
+    let value;
+    let error;
     if (path === "/login") {
         ({ value, error } = userSchema2.validate(user));
     }

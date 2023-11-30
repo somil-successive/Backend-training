@@ -6,7 +6,7 @@ export const checkNumParamMiddleware = (
   next: NextFunction
 ) => {
   const query = req.query;
-  if (isNaN(query.id)) {
+  if (!Number(query.id)) {
     res.send("Query is not a number");
   }
   next();

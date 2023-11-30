@@ -9,8 +9,8 @@ export const authMiddleware = (req:Request, res:Response, next:NextFunction) => 
     next(createError(403, "Unauthorized - Token not provided."));
   }
   try {
-    const decodedUser = jwt.verify(token, "123");
-    req.user = decodedUser;
+    const decodedUser = jwt.verify(token ?? "", "123");
+    req.body.user = decodedUser;
     next();
   } catch (error) {
     next(createError(401, "Unauthorized -Invalid token"));
