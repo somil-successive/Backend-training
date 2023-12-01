@@ -10,7 +10,7 @@ const dataRouter = express.Router();
 dataRouter.get(
   "/get",
   limitingReqMiddleware,
-  customHeaderMiddleware({ content: "Text" }),
+  customHeaderMiddleware({}),
   customLogsMiddleware,
   authMiddleware,
   getData
