@@ -1,14 +1,15 @@
-// import userData from '../utils/dataSeeder.js'
+import allData from "../utils/dataSeeder.json" assert { type: "json" };
+import fs from "fs";
 
 export const dataSeederController = (req, res) => {
-//   const data = req.body;
+  const data = req.body;
 
-//   userData.push(data);
+  allData.push(data);
 
-//   fs.writeFile("../utils/dataSeeder.js", userData, (err) => {
-//     if (err) console.log(err);
-//   });
-//   res.json(req.body);
+  fs.writeFileSync(
+    "/home/somil.kaushik/backend-training/src/utils/dataSeeder.json",
+    JSON.stringify(allData)
+  );
 
-res.send("hi")
+  res.json({ message: "data has been seeded in file" });
 };
