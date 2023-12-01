@@ -1,3 +1,3 @@
 export const errorHandlingMiddleware = (err, req, res, next) => {
-  res.send(err.message);
+  res.json({error:err.message});
 };
