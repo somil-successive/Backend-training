@@ -1,3 +1,3 @@
 export const login = (req, res) => {
-  res.json("User Authorised");
+    res.json("User Authorised");
 };
