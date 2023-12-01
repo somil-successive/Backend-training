@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { configurations} from "../utils/config.js";
 
 export const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
@@ -9,11 +10,10 @@ export const authMiddleware = (req, res, next) => {
       .json({ message: "Unauthorized - Token not provided." });
   }
   try {
-    const decodedUser = jwt.verify(token, "123");
+    const decodedUser = jwt.verify(token, configurations.secretKey);
     req.user = decodedUser;
     next();
   } catch (error) {
-    // return res.status(401).json({ message: "Unauthorized - Invalid token" });
     error.message = "invalid token"
     next(error)
   }
