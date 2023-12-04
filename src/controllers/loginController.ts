@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
 
-export const login = (req: Request, res: Response) => {
-  res.json("User Authorised");
-};
+class LoginController{
+  public  login = (req: Request, res: Response):void => {
+    res.json("User Authorised");
+  };
+
+}
+export default new LoginController().login;

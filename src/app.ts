@@ -2,7 +2,7 @@ import express, { NextFunction } from "express";
 import dataRoutes from "./routes/dataRoutes.js";
 import fs from "fs";
 import createError from "http-errors";
-import { errorHandlingMiddleware } from "./middleware/errorHandlingMiddleware.js";
+import  errorHandlingMiddleware  from "./middleware/errorHandlingMiddleware.js";
 import { Request, Response } from "express";
 const app = express();
 
