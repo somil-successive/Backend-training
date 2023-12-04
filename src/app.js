@@ -11,7 +11,7 @@ app.post("/abc", dataSeederController);
 
 app.use("/data", dataRouter);
 
-// app.use(errorHandlingMiddleware);
+app.use(errorHandlingMiddleware);
 
 app.listen(configurations.port, () => {
   console.log(`serveris running at port ${configurations.port}`);
