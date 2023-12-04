@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { configurations} from "../utils/config.js";
+import { configurations } from "../utils/config.js";
 
 export const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
@@ -14,7 +14,7 @@ export const authMiddleware = (req, res, next) => {
     req.user = decodedUser;
     next();
   } catch (error) {
-    error.message = "invalid token"
-    next(error)
+    error.message = "invalid token";
+    next(error);
   }
 };
