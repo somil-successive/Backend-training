@@ -1,13 +1,15 @@
-import {Request,Response,NextFunction} from 'express';
+import { Request, Response, NextFunction } from "express";
 
-class CustomLogsMiddleware{
-  public customLogsMiddleware = (req:Request, res:Response, next:NextFunction):void=> {
+class CustomLogsMiddleware {
+  public customLogsMiddleware = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): void => {
     console.log(
       `Request Method: ${req.method} URL: ${req.url}  Timestamp: ${new Date()}`
     );
     next();
   };
-  
-
 }
 export default new CustomLogsMiddleware().customLogsMiddleware;

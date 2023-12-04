@@ -1,12 +1,12 @@
 import { userSchema1, userSchema2 } from "../utils/userSchema.js";
 import { Request, Response, NextFunction } from "express";
 
-class DynamicValidationMiddleware{
-  public  dynamicValidationMiddleware = (
+class DynamicValidationMiddleware {
+  public dynamicValidationMiddleware = (
     req: Request,
     res: Response,
     next: NextFunction
-  ):void => {
+  ): void => {
     const path = req.url;
     console.log(path);
     const user = req.body;
@@ -17,10 +17,8 @@ class DynamicValidationMiddleware{
     } else {
       ({ value, error } = userSchema1.validate(user));
     }
-    if (error)  res.json("Unauthorised User");
+    if (error) res.json("Unauthorised User");
     next();
   };
-  
-
 }
 export default new DynamicValidationMiddleware().dynamicValidationMiddleware;

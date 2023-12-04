@@ -1,19 +1,17 @@
-import {Request,Response} from 'express';
+import { Request, Response } from "express";
 
-class AsyncController{
-   public asyncData = async (req:Request, res:Response):Promise<void>=> {
-    let myPromise = new Promise(function (resolve,reject) {
+class AsyncController {
+  public asyncData = async (req: Request, res: Response): Promise<void> => {
+    let myPromise = new Promise(function (resolve, reject) {
       setTimeout(function () {
         reject("Time Exceeds");
-      }, 3000);       
+      }, 3000);
     });
-    
-    try{
+
+    try {
       const response = await myPromise;
-      console.log(response);
-    }
-    catch(err){
-      res.status(400).json({error: err})
+    } catch (err) {
+      res.status(400).json({ error: err });
     }
   };
 }

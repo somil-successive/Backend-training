@@ -5,7 +5,7 @@ class CheckNumParamMiddleware {
     req: Request,
     res: Response,
     next: NextFunction
-  ):void => {
+  ): void => {
     const query = req.query;
     if (!Number(query.id)) {
       res.send("Query is not a number");

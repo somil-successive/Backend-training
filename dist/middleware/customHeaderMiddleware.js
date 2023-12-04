@@ -1,11 +1,11 @@
 class CustomHeaderMiddleware {
-    constructor() {
-        this.customHeaderMiddleware = (customHeader) => {
-            return (req, res, next) => {
-                res.set(customHeader);
-                next();
-            };
+    constructor(customHeader) {
+        this.customHeaderMiddleware = (req, res, next) => {
+            res.set(this.customHeader);
+            next();
         };
+        this.customHeader = customHeader;
     }
 }
-export default new CustomHeaderMiddleware().customHeaderMiddleware;
+;
+export default new CustomHeaderMiddleware({ "Coontent": "txt" }).customHeaderMiddleware;
