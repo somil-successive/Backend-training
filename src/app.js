@@ -1,25 +1,18 @@
 import express from "express";
-import dataRoutes from "./routes/dataRoutes.js";
+import dataRouter from "./routes/dataRoutes.js";
 import fs from "fs";
 import { errorHandlingMiddleware } from "./middleware/errorHandlingMiddleware.js";
+import { dataSeederController } from "./controllers/dataSeederController.js";
+import { configurations } from "./utils/config.js";
 const app = express();
 app.use(express.json());
 
-app.post("/api", function (req, res) {
-  console.log(req.body);
-  const { name } = req.body;
-  console.log(typeof name);
-  fs.appendFile("./src/utils/dataSeeder.js", name, (err) => {
-    console.log(err);
-  });
-  res.json(req.body);
-});
+app.post("/abc", dataSeederController);
 
-app.use("/data", dataRoutes);
-
+app.use("/data", dataRouter);
 
 app.use(errorHandlingMiddleware);
 
-app.listen(4000, () => {
-  console.log("serveris running at port 4000");
+app.listen(configurations.port, () => {
+  console.log(`serveris running at port ${configurations.port}`);
 });

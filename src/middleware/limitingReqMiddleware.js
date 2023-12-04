@@ -1,21 +1,26 @@
 let count = 0;
 let limit = 5;
-let time, time1;
+let currReqTime, initialReqTime;
 export const limitingReqMiddleware = (req, res, next) => {
-  if (count === 0) {
-    time1 = new Date().getSeconds();
-    time = new Date().getSeconds();
-  } else {
-    time = new Date().getSeconds();
-    if (time < time1) time += 59;
-  }
-  if (count < limit && time <= time1 + 5) {
-    count++;
-    next();
-  } else if (time > time1 + 5) {
-    count = 0;
-    next();
-  } else {
-    res.status(429).send("Too many requests");
+  try {
+    if (count === 0) {
+      initialReqTime = new Date().getSeconds();
+      currReqTime = new Date().getSeconds();
+    } else {
+      currReqTime = new Date().getSeconds();
+      if (currReqTime < initialReqTime) currReqTime += 59;
+    }
+    if (count < limit && currReqTime <= initialReqTime + 5) {
+      count++;
+      next();
+    } else if (currReqTime > initialReqTime + 5) {
+      count = 0;
+      next();
+    } else {
+      throw new Error("Limit Exceeds");
+    }
+  } catch (error) {
+    res.status(429);
+    next(error);
   }
 };
