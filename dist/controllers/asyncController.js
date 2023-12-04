@@ -7,17 +7,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const asyncData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let myPromise = new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            reject("Time Exceeds");
-        }, 3000);
-    });
-    try {
-        const response = yield myPromise;
-        console.log(response);
+class AsyncController {
+    constructor() {
+        this.asyncData = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            let myPromise = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    reject("Time Exceeds");
+                }, 3000);
+            });
+            try {
+                const response = yield myPromise;
+                console.log(response);
+            }
+            catch (err) {
+                res.json({ error: err });
+            }
+        });
     }
-    catch (err) {
-        res.json({ error: err });
-    }
-});
+}
+export default new AsyncController().asyncData;
