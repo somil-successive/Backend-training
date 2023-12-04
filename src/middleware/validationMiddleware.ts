@@ -9,7 +9,11 @@ class ValidationMiddleware {
   ): void => {
     const user = req.body;
     const { value, error } = userSchema1.validate(user);
-    if (error) res.json("Unauthorised User");
+    if (error) {
+      res.status(406);
+      res.send(error.details);
+    }
+
     next();
   };
 }

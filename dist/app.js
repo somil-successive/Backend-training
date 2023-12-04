@@ -1,27 +1,24 @@
 import express from "express";
-import dataRoutes from "./routes/dataRoutes.js";
-import fs from "fs";
-import createError from "http-errors";
 import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware.js";
-const app = express();
-app.use(express.json());
-app.post("/api", function (req, res) {
-    console.log(req.body);
-    const { name } = req.body;
-    console.log(typeof name);
-    fs.appendFile("./src/utils/dataSeeder.js", name, (err) => {
-        console.log(err);
-    });
-    res.json(req.body);
-});
-app.use("/data", dataRoutes);
-app.use("/", (req, res, next) => {
-    return next(createError(404, "Not found"));
-});
-app.use((err, req, res, next) => {
-    res.status(err.status).send(err.message);
-});
-app.use(errorHandlingMiddleware);
-app.listen(4000, () => {
-    console.log("server is running at port 4000");
-});
+import DataRouter from "./routes/dataRoutes.js";
+class App {
+    constructor() {
+        this.app = express();
+        this.setRoutes = () => {
+            const dataRouter = new DataRouter();
+            this.app.use('/data', dataRouter.getRouter());
+        };
+        this.setErrorHandler = () => {
+            this.app.use(errorHandlingMiddleware);
+        };
+        this.startServer = (PORT) => {
+            this.app.listen(PORT, () => {
+                console.log(`server is running on PORT ${PORT}`);
+            });
+        };
+        this.setRoutes();
+        this.app.use(express.json());
+        this.setErrorHandler();
+    }
+}
+export default new App();

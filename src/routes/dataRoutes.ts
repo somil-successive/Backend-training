@@ -1,8 +1,7 @@
-import express from "express";
+import express, { Router } from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
 import DataController from "../controllers/dataController.js";
 import customLogsMiddleware from "../middleware/customLogsMiddleware.js";
-import customHeaderMiddleware from "../middleware/customHeaderMiddleware.js";
 import limitingReqMiddleware from "../middleware/limitingReqMiddleware.js";
 import checkNumParamMiddleware from "../middleware/checkNumParamMiddleware.js";
 import geoLocMiddleware from "../middleware/geoLocMiddleware.js";
@@ -13,31 +12,49 @@ import paramValidationMiddleware from "../middleware/paramValidationMiddleware.j
 import asyncController from "../controllers/asyncController.js";
 import validationMiddleware from "../middleware/validationMiddleware.js";
 import healthCheckController from "../controllers/healthCheckController.js";
+import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware.js";
 
-const dataRouter = express.Router();
+class DataRouter {
+  private router: Router = Router();
 
-dataRouter.get(
-  "/get",
-  paramValidationMiddleware,
-  geoLocMiddleware,
-  limitingReqMiddleware,
-  customHeaderMiddleware,
-  customLogsMiddleware,
-  authMiddleware,
-  checkNumParamMiddleware,
-  new DataController().getData
-);
-dataRouter.post(
-  "/post",
-  limitingReqMiddleware,
-  // customHeaderMiddleware({ content: "Html" }),
-  customLogsMiddleware,
-  validationMiddleware,
-  new DataController().postData
-);
-dataRouter.post("/login", loginController);
-dataRouter.post("/register", dynamicValidationMiddleware, registerController);
-dataRouter.get("/async", asyncController);
-dataRouter.get("/health", healthCheckController);
+  private initializeRoutes = (): void => {
+    this.router.get(
+      "/get",
+      paramValidationMiddleware,
+      geoLocMiddleware,
+      limitingReqMiddleware,
+      new CustomHeaderMiddleware({ Cooooontent: "txt" }).customHeaderMiddleware,
+      customLogsMiddleware,
+      authMiddleware,
+      checkNumParamMiddleware,
+      new DataController().getData
+    );
 
-export default dataRouter;
+    this.router.post(
+      "/post",
+      limitingReqMiddleware,
+      new CustomHeaderMiddleware({ Coontent: "html" }).customHeaderMiddleware,
+      customLogsMiddleware,
+      validationMiddleware,
+      new DataController().postData
+    );
+
+    this.router.post("/login", loginController);
+    this.router.post(
+      "/register",
+      dynamicValidationMiddleware,
+      registerController
+    );
+    this.router.get("/async", asyncController);
+    this.router.get("/health", healthCheckController);
+  };
+
+  constructor() {
+    this.initializeRoutes();
+  }
+
+  public getRouter = (): Router => {
+    return this.router;
+  };
+}
+export default DataRouter;

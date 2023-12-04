@@ -1,4 +1,5 @@
 import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import createError from "http-errors";
 class DynamicValidationMiddleware {
     constructor() {
         this.dynamicValidationMiddleware = (req, res, next) => {
@@ -10,11 +11,12 @@ class DynamicValidationMiddleware {
             if (path === "/login") {
                 ({ value, error } = userSchema2.validate(user));
             }
-            else {
+            else if (path === "/register") {
                 ({ value, error } = userSchema1.validate(user));
             }
-            if (error)
-                res.json("Unauthorised User");
+            if (error) {
+                return next(createError(406, "Not Acceptable"));
+            }
             next();
         };
     }

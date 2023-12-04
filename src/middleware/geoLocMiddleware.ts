@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Request, Response, NextFunction } from "express";
+import createError from "http-errors";
 
 class GeoLocationMiddleware {
   private key = "29f6aafef213de059431ac964c670b6d";
@@ -16,7 +17,7 @@ class GeoLocationMiddleware {
     const region = response.data.country_name;
     console.log(response);
     if (region !== "India") {
-      res.json("Unauthorised user");
+      return next(createError(401, "Unauthorised User"));
     }
     next();
   };
