@@ -7,9 +7,12 @@ export const dynamicValidationMiddleware = (req, res, next) => {
   let { value, error } = {};
   if (path === "/login") {
     ({ value, error } = userSchema2.validate(user));
-  } else {
+  } else if(path==="/register") {
     ({ value, error } = userSchema1.validate(user));
   }
-  if (error) return res.json("Unauthorised User");
+  if (error) {
+    res.status(406)
+    return res.json("Not Acceptable");
+  }
   next();
 };
