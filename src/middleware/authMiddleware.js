@@ -8,8 +8,11 @@ export const authMiddleware = (req, res, next) => {
     next(createError(403, "Unauthorized - Token not provided."));
   }
   try {
-    const decodedUser = jwt.verify(token, "123");
-    req.user = decodedUser;
+    jwt.verify(token, "123", (err) => {
+      if (err) {
+        next(createError(401, "Unauthorized -Invalid token"));
+      }
+    });
     next();
   } catch (error) {
     next(createError(401, "Unauthorized -Invalid token"));
