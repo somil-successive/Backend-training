@@ -6,11 +6,11 @@ export const geoLocMiddleware = async (req, res, next) => {
     const response = await axios.get(
       `http://api.ipstack.com/${ip}?access_key=${key}`
     );
-    const region = response.data.country_name;
+    const region = response.data.country_code;
     console.log(response);
-    if (region !== "India") {
+    if (region !== "IN") {
       res.status(401);
-      throw new Error("Unauthorised user");
+      throw new Error("Access not allowed");
     }
     next();
   } catch (err) {
