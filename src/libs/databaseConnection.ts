@@ -12,7 +12,7 @@ class Connection {
 
         this.seedCountries();
       })
-      .catch((err: any) => {
+      .catch((err: Error) => {
         console.error("MongoDB connection error" + err);
       });
   };

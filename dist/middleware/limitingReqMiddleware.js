@@ -2,7 +2,7 @@ class LimitingReqMiddleware {
     constructor() {
         this.limitingReqMiddleware = (req, res, next) => {
             let count = 0;
-            let limit = 5;
+            const limit = 5;
             let time, time1 = 0;
             if (count === 0) {
                 time1 = new Date().getSeconds();

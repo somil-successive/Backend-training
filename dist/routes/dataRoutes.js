@@ -1,4 +1,3 @@
-import { Router } from "express";
 import authMiddleware from "../middleware/authMiddleware.js";
 import DataController from "../controllers/dataController.js";
 import customLogsMiddleware from "../middleware/customLogsMiddleware.js";
@@ -13,6 +12,7 @@ import asyncController from "../controllers/asyncController.js";
 import validationMiddleware from "../middleware/validationMiddleware.js";
 import healthCheckController from "../controllers/healthCheckController.js";
 import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware.js";
+import { Router } from "express";
 class DataRouter {
     constructor() {
         this.router = Router();

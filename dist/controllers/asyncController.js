@@ -10,13 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 class AsyncController {
     constructor() {
         this.asyncData = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            let myPromise = new Promise(function (resolve, reject) {
+            const myPromise = new Promise(function (reject) {
                 setTimeout(function () {
                     reject("Time Exceeds");
                 }, 3000);
             });
             try {
                 const response = yield myPromise;
+                console.log(response);
             }
             catch (err) {
                 res.status(400).json({ error: err });

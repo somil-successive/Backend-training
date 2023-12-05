@@ -6,15 +6,16 @@ class DynamicValidationMiddleware {
             const path = req.url;
             console.log(path);
             const user = req.body;
-            let value;
-            let error;
+            let err;
             if (path === "/login") {
-                ({ value, error } = userSchema2.validate(user));
+                const { error } = userSchema2.validate(user);
+                err = error;
             }
             else if (path === "/register") {
-                ({ value, error } = userSchema1.validate(user));
+                const { error } = userSchema1.validate(user);
+                err = error;
             }
-            if (error) {
+            if (err) {
                 return next(createError(406, "Not Acceptable"));
             }
             next();

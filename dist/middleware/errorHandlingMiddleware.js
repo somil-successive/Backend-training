@@ -1,6 +1,6 @@
 class ErrorHandlingMiddleware {
     constructor() {
-        this.errorHandlingMiddleware = (err, req, res, next) => {
+        this.errorHandlingMiddleware = (err, req, res) => {
             console.log(err);
             res.send(err.message);
         };

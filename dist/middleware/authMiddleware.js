@@ -10,7 +10,7 @@ class AuthMiddlewarwe {
                     next(createError(403, "Unauthorized - Token not provided."));
                 }
                 else {
-                    const decodedUser = jwt.verify(token !== null && token !== void 0 ? token : "", configurations.secretKey);
+                    jwt.verify(token !== null && token !== void 0 ? token : "", configurations.secretKey);
                     next();
                 }
             }

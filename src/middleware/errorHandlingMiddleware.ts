@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 
 class ErrorHandlingMiddleware {
   public errorHandlingMiddleware = (
     err: Error,
     req: Request,
     res: Response,
-    next: NextFunction
+    
   ): void => {
     console.log(err);
     res.send(err.message);
