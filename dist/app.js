@@ -1,6 +1,7 @@
 import express from "express";
 import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware.js";
 import DataRouter from "./routes/dataRoutes.js";
+import Connection from "./libs/databaseConnection.js";
 class App {
     constructor() {
         this.app = express();
@@ -16,7 +17,8 @@ class App {
                 console.log(`server is running on PORT ${PORT}`);
             });
         };
-        this.setRoutes();
+        new Connection().connectDB(),
+            this.setRoutes();
         this.app.use(express.json());
         this.setErrorHandler();
     }

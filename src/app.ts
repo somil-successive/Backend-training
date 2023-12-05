@@ -4,6 +4,7 @@ import createError from "http-errors";
 import  errorHandlingMiddleware  from "./middleware/errorHandlingMiddleware.js";
 import { Request, Response } from "express";
 import DataRouter from "./routes/dataRoutes.js";
+import Connection from "./libs/databaseConnection.js";
 
 
 
@@ -21,6 +22,7 @@ class App{
   }
 
   constructor(){
+    new Connection().connectDB(),
     this.setRoutes();
     this.app.use(express.json());
     this.setErrorHandler();
