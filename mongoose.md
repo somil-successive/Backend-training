@@ -19,7 +19,7 @@ However, there are libraries and tools that provide similar functionality in the
 
 # MONGOOSE
 
-Mongoose is an Object-Document Mapper (ODM) for MongoDB in Node.js, providing a schema-based solution for modeling data. It enables developers to define data structures using schemas, specifying fields, types, and validation rules. Models, representing MongoDB collections, facilitate CRUD operations and offer features like instance methods, middleware for pre/post-processing, and validation. Mongoose supports powerful querying with a rich set of functions, enhancing MongoDB interactions. Middleware functions enable custom logic before or after database operations. Validation rules ensure data integrity. Population allows referencing documents in other collections for data aggregation. Mongoose promotes code organization with modular schema and model definitions. It simplifies database connectivity with the ability to establish connections and manage configurations. Overall, Mongoose streamlines MongoDB development in Node.js by providing a higher-level abstraction, enforcing structure, and offering convenient features for data manipulation, validation, and querying.
+Mongoose is an Object-Document Mapper (ODM) for MongoDB in Node.js, providing a schema-based solution for modeling data. It enables developers to define data structures using schemas, specifying fields, types, and validation rules. Models, representing MongoDB collections, facilitate CRUD operations and offer features like instance methods, middleware for pre/post-processing, and validation. Mongoose supports powerful querying with a rich set of functions, enhancing MongoDB interactions. Middleware functions enable custom logic before or after database operations. Validation rules ensure data integrity.
 
 # RDBMS vs NoSQL Database
 
@@ -28,25 +28,25 @@ Relational Database Management Systems (RDBMS) and NoSQL databases differ signif
 ### RDBMS (Relational Database Management System):
 
 1. **Tables:**
-   * **Structure:** RDBMS organizes data into tables, where each table consists of rows and columns. Tables have a predefined schema that defines the data types and relationships between tables.
-   * **Schema:** A rigid schema is enforced, ensuring data integrity and consistency. All data in a column must adhere to a specific data type.
-   * **Normalization:** RDBMS often follows normalization principles to minimize redundancy and dependency in the data.
+   - **Structure:** RDBMS organizes data into tables, where each table consists of rows and columns. Tables have a predefined schema that defines the data types and relationships between tables.
+   - **Schema:** A rigid schema is enforced, ensuring data integrity and consistency. All data in a column must adhere to a specific data type.
+   - **Normalization:** RDBMS often follows normalization principles to minimize redundancy and dependency in the data.
 2. **ACID Properties:**
-   * **Transactions:** RDBMS adheres to ACID properties (Atomicity, Consistency, Isolation, Durability) to ensure the reliability of transactions.
+   - **Transactions:** RDBMS adheres to ACID properties (Atomicity, Consistency, Isolation, Durability) to ensure the reliability of transactions.
 3. **Scalability:**
-   * **Vertical Scaling:** Traditionally, RDBMS systems have scaled vertically by adding more resources to a single server.
+   - **Vertical Scaling:** Traditionally, RDBMS systems have scaled vertically by adding more resources to a single server.
 
 ### NoSQL Database:
 
 1. **Collections/Documents:**
-   * **Structure:** NoSQL databases, being schema-less or schema-flexible, organize data differently. In place of tables, they use collections (equivalent to tables) and documents (equivalent to rows/records).
-   * **Schema:** NoSQL databases allow dynamic and flexible schemas, permitting different documents in the same collection to have different structures.
+   - **Structure:** NoSQL databases, being schema-less or schema-flexible, organize data differently. In place of tables, they use collections (equivalent to tables) and documents (equivalent to rows/records).
+   - **Schema:** NoSQL databases allow dynamic and flexible schemas, permitting different documents in the same collection to have different structures.
 2. **Consistency and Transactions:**
-   * **CAP Theorem:** NoSQL databases often prioritize scalability and availability over strong consistency, adhering to the CAP theorem (Consistency, Availability, Partition tolerance). Some NoSQL databases sacrifice strict consistency for better performance and fault tolerance.
-   * **Eventual Consistency:** Many NoSQL databases provide eventual consistency, meaning that the system will become consistent over time as nodes in the database synchronize.
+   - **CAP Theorem:** NoSQL databases often prioritize scalability and availability over strong consistency, adhering to the CAP theorem (Consistency, Availability, Partition tolerance). Some NoSQL databases sacrifice strict consistency for better performance and fault tolerance.
+   - **Eventual Consistency:** Many NoSQL databases provide eventual consistency, meaning that the system will become consistent over time as nodes in the database synchronize.
 3. **Scalability:**
-   * **Horizontal Scaling:** NoSQL databases are designed to scale horizontally by adding more servers to a distributed system. This makes them well-suited for handling large volumes of data and traffic.
+   - **Horizontal Scaling:** NoSQL databases are designed to scale horizontally by adding more servers to a distributed system. This makes them well-suited for handling large volumes of data and traffic.
 4. **Use Cases:**
-   * **Variety of Data Models:** NoSQL databases are suitable for diverse data models, including key-value pairs, document-oriented, column-family, and graph databases. This flexibility makes them suitable for applications with evolving or unpredictable data requirements.
+   - **Variety of Data Models:** NoSQL databases are suitable for diverse data models, including key-value pairs, document-oriented, column-family, and graph databases. This flexibility makes them suitable for applications with evolving or unpredictable data requirements.
 
 In summary, while RDBMS organizes data into structured tables with a fixed schema and enforces ACID properties, NoSQL databases provide more flexibility in terms of schema design, scalability, and support for various data models. The choice between them depends on the specific needs of the application, data structure, and scalability requirements.
