@@ -10,6 +10,5 @@ export const dataSeederController = (req, res) => {
     "/home/somil.kaushik/backend-training/src/utils/dataSeeder.json",
     JSON.stringify(allData)
   );
-
   res.json({ message: "data has been seeded in file" });
 };

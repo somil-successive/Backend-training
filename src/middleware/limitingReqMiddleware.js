@@ -1,5 +1,6 @@
+import createHttpError from "http-errors";
 let count = 0;
-let limit = 5;
+const limit = 5;
 let currReqTime, initialReqTime;
 export const limitingReqMiddleware = (req, res, next) => {
   try {
@@ -17,10 +18,10 @@ export const limitingReqMiddleware = (req, res, next) => {
       count = 0;
       next();
     } else {
-      throw new Error("Limit Exceeds");
+     next( createHttpError(429,"Limit Exceeds"));
+     
     }
   } catch (error) {
-    res.status(429);
-    next(error);
+    next( createHttpError(429,"Limit Exceeds"));
   }
 };
