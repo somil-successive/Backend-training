@@ -7,6 +7,7 @@ import DataRouter from "./routes/dataRoutes.js";
 import Connection from "./libs/databaseConnection.js";
 
 import userRoutes from './routes/userRoutes.js'
+import countryRouter from "./routes/countryRoutes.js";
 
 
 
@@ -19,6 +20,7 @@ class App{
     const dataRouter : DataRouter = new DataRouter();
     this.app.use('/data', dataRouter.getRouter());
     this.app.use('/user', userRoutes);
+    this.app.use('/country',countryRouter);
   }
 
   private setErrorHandler = () : void =>{
