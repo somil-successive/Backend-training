@@ -12,6 +12,7 @@ import { register } from "../controllers/registerController.js";
 import { asyncData } from "../controllers/asyncController.js";
 import { paramValidationMiddleware } from "../middleware/paramValidationMiddleware.js";
 import { paramController } from "../controllers/paramController.js";
+import { validationMiddleware } from "../middleware/validationMiddleware.js";
 
 const dataRouter = express.Router();
 

@@ -25,7 +25,15 @@ class Connection {
         };
         this.seedCountries = () => __awaiter(this, void 0, void 0, function* () {
             yield playingCountries.deleteMany({});
+<<<<<<< HEAD
             yield playingCountries.insertMany([{ country_name: "india" }, { country_name: "australia" }, { country_name: "england" }]);
+=======
+            yield playingCountries.insertMany([
+                { country_name: "india" },
+                { country_name: "australia" },
+                { country_name: "england" },
+            ]);
+>>>>>>> 7b0fba7b7d1ec4f3c89b1680b880a3e9dbe3f46d
         });
     }
 }

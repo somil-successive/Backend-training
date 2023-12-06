@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
+import { configurations } from "../utils/config.js";
 
 export const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization;
@@ -16,5 +17,8 @@ export const authMiddleware = (req, res, next) => {
     next();
   } catch (error) {
     next(createError(401, "Unauthorized -Invalid token"));
+    return res
+      .status(401)
+      .json({ message: "Unauthorized - Token not provided." });
   }
 };

@@ -3,6 +3,8 @@ import dataRoutes from "./routes/dataRoutes.js";
 import fs from "fs";
 import createError from "http-errors";
 import { errorHandlingMiddleware } from "./middleware/errorHandlingMiddleware.js";
+import { dataSeederController } from "./controllers/dataSeederController.js";
+import { configurations } from "./utils/config.js";
 
 const app = express();
 
@@ -19,16 +21,19 @@ app.post("/api", function (req, res) {
 });
 
 app.use("/data", dataRoutes);
-
+app.post("/abc", dataSeederController);
 app.use("/", (req, res, next) => {
   return next(createError(404, "Not found"));
 });
-
 app.use((err, req, res, next) => {
   res.status(err.status).send(err.message);
 });
 app.use(errorHandlingMiddleware);
 
-app.listen(4000, () => {
-  console.log("server is running at port 4000");
+app.listen(configurations.port, () => {
+  console.log(`serveris running at port ${configurations.port}`);
 });
+
+
+
+

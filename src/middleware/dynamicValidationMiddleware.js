@@ -1,4 +1,4 @@
-import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import { loginSchema, registerSchema } from "../utils/userSchema.js";
 
 export const dynamicValidationMiddleware = (req, res, next) => {
   const path = req.url;
@@ -6,10 +6,13 @@ export const dynamicValidationMiddleware = (req, res, next) => {
   const user = req.body;
   let { value, error } = {};
   if (path === "/login") {
-    ({ value, error } = userSchema2.validate(user));
-  } else {
-    ({ value, error } = userSchema1.validate(user));
+    ({ value, error } = loginSchema.validate(user));
+  } else if (path === "/register") {
+    ({ value, error } = registerSchema.validate(user));
   }
-  if (error) return res.json("Unauthorised User");
+  if (error) {
+    res.status(406);
+    return res.json("Not Acceptable");
+  }
   next();
 };
