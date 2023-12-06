@@ -7,7 +7,6 @@ export const geoLocMiddleware = async (req, res, next) => {
       `http://api.ipstack.com/${ip}?access_key=${key}`
     );
     const region = response.data.country_code;
-    console.log(response);
     if (region !== "IN") {
       res.status(401);
       throw new Error("Access not allowed");
