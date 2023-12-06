@@ -9,7 +9,7 @@ export const authMiddleware = (req, res, next) => {
     next(createError(403, "Unauthorized - Token not provided."));
   }
   try {
-    jwt.verify(token, "123", (err) => {
+    jwt.verify(token, configurations.secretKey, (err) => {
       if (err) {
         next(createError(401, "Unauthorized -Invalid token"));
       }
@@ -17,8 +17,5 @@ export const authMiddleware = (req, res, next) => {
     next();
   } catch (error) {
     next(createError(401, "Unauthorized -Invalid token"));
-    return res
-      .status(401)
-      .json({ message: "Unauthorized - Token not provided." });
   }
 };

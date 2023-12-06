@@ -18,7 +18,6 @@ const dataRouter = express.Router();
 
 dataRouter.get(
   "/get",
-  paramValidationMiddleware,
   geoLocMiddleware,
   limitingReqMiddleware,
   customHeaderMiddleware({ content: "Text" }),
@@ -32,7 +31,7 @@ dataRouter.post(
   limitingReqMiddleware,
   customHeaderMiddleware({ content: "Html" }),
   customLogsMiddleware,
-
+  authMiddleware,
   postData
 );
 dataRouter.post("/login", login);
