@@ -18,12 +18,7 @@ class Connection {
   };
 
   private seedCountries = async () => {
-    await playingCountries.deleteMany({});
-    await playingCountries.insertMany([
-      { country_name: "india" },
-      { country_name: "australia" },
-      { country_name: "england" },
-    ]);
+    await playingCountries.insertMany({ country_name: "india" });
   };
 }
 export default Connection;
