@@ -7,7 +7,6 @@ export const dynamicValidationMiddleware = (
   next: NextFunction
 ) => {
   const path = req.url;
-  console.log(path);
   const user = req.body;
   let value: any;
   let error: any;

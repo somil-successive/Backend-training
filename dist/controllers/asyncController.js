@@ -15,7 +15,6 @@ export const asyncData = (req, res) => __awaiter(void 0, void 0, void 0, functio
     });
     try {
         const response = yield myPromise;
-        console.log(response);
     }
     catch (err) {
         res.json({ error: err });

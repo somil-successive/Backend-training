@@ -1,13 +1,18 @@
 import { Request, Response, NextFunction } from "express";
+import createError from "http-errors";
 
 export const checkNumParamMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const query = req.query;
-  if (!Number(query.id)) {
-    res.send("Query is not a number");
+  try {
+    const query = req.query;
+    if (!Number(query.id)) {
+      res.send("id is not a number");
+    }
+    next();
+  } catch (err) {
+    next(err);
   }
-  next();
 };

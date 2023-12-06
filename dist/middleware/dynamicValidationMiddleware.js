@@ -1,7 +1,6 @@
 import { userSchema1, userSchema2 } from "../utils/userSchema.js";
 export const dynamicValidationMiddleware = (req, res, next) => {
     const path = req.url;
-    console.log(path);
     const user = req.body;
     let value;
     let error;

@@ -9,7 +9,6 @@ export const asyncData = async (req:Request, res:Response) => {
   
   try{
     const response = await myPromise;
-    console.log(response);
   }
   catch(err){
     res.json({error: err})

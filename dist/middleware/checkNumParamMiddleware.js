@@ -1,7 +1,12 @@
 export const checkNumParamMiddleware = (req, res, next) => {
-    const query = req.query;
-    if (!Number(query.id)) {
-        res.send("Query is not a number");
+    try {
+        const query = req.query;
+        if (!Number(query.id)) {
+            res.send("id is not a number");
+        }
+        next();
     }
-    next();
+    catch (err) {
+        next(err);
+    }
 };
