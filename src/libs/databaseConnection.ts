@@ -4,17 +4,16 @@ import playingCountries from "./countriesModel.js";
 class Connection {
   private mongoUri: string = "mongodb://127.0.0.1:27017/test";
 
-  public connectDB = (): void => {
-    mongoose
-      .connect(this.mongoUri)
-      .then(() => {
-        console.log("MongoDB is connected successfully.");
+  public connectDB = async (): Promise<void> => {
+    try {
+      await mongoose.connect(this.mongoUri);
 
-        this.seedCountries();
-      })
-      .catch((err: Error) => {
-        console.error("MongoDB connection error" + err);
-      });
+      console.log("MongoDB is connected successfully.");
+
+      this.seedCountries();
+    } catch (err) {
+      console.error("MongoDB connection error" + err);
+    }
   };
 
   private seedCountries = async () => {
