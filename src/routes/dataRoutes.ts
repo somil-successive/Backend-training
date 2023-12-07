@@ -11,6 +11,7 @@ import { login } from "../controllers/loginController.js";
 import { register } from "../controllers/registerController.js";
 import { asyncData } from "../controllers/asyncController.js";
 import { paramValidationMiddleware } from "../middleware/paramValidationMiddleware.js";
+import { paramController } from "../controllers/paramController.js";
 
 const dataRouter = express.Router();
 
@@ -36,5 +37,6 @@ dataRouter.post(
 dataRouter.post("/login", login);
 dataRouter.post("/register", dynamicValidationMiddleware, register);
 dataRouter.get("/async", asyncData);
+dataRouter.get("/:id", paramValidationMiddleware, paramController);
 
 export default dataRouter;

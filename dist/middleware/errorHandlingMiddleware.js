@@ -1,3 +1,6 @@
 export const errorHandlingMiddleware = (err, req, res, next) => {
-    res.send(err.message);
+    if (!res.status) {
+        res.status(400);
+    }
+    res.status(err.status).json({ error: err.message });
 };

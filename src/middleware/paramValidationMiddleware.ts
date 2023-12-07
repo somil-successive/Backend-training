@@ -6,9 +6,9 @@ export const paramValidationMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.query;
+  const { id } = req.params;
   if (!Number(id)) {
-    return next(createError(406, "Not Valid Params"));
+    next(createError(406, "Not Valid Params"));
   }
   next();
 };
