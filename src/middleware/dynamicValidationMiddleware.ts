@@ -4,8 +4,7 @@ import {
   userSchema2,
 } from "../utils/userSchema.js";
 import { Request, Response, NextFunction } from "express";
-import createError from "http-errors";
-import { ValidationError } from "joi";
+import Joi from "joi";
 
 class DynamicValidationMiddleware {
   public dynamicValidationMiddleware = (
@@ -14,29 +13,21 @@ class DynamicValidationMiddleware {
     next: NextFunction
   ): void => {
     const path = req.url;
-    console.log(path);
     const user = req.body;
-    let err: ValidationError | undefined;
+    let validation: Joi.ValidationResult;
     if (path === "/login") {
-      const { error } = userSchema2.validate(user);
-      err = error;
-    } else if (path === "/register") {
-      const { error } = userSchema1.validate(user);
-      err = error;
+      validation = userSchema2.validate(user);
     } else if (path === "/create") {
-      const { error } = countrySchema.validate(user);
-      err = error;
+      validation = countrySchema.validate(user);
+    } else {
+      validation = userSchema1.validate(user);
     }
-    else{
-      next();
+    if (validation.error) {
+      res.status(406);
+      res.json(validation.error);
     }
-    if (err) {
-      next(createError(406, "Not Acceptable"));
-    }
-    else{
-      next();
-    }
-    
+
+    next();
   };
 }
 export default new DynamicValidationMiddleware().dynamicValidationMiddleware;

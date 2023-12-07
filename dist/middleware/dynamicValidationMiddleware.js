@@ -1,33 +1,24 @@
 import { countrySchema, userSchema1, userSchema2, } from "../utils/userSchema.js";
-import createError from "http-errors";
 class DynamicValidationMiddleware {
     constructor() {
         this.dynamicValidationMiddleware = (req, res, next) => {
             const path = req.url;
-            console.log(path);
             const user = req.body;
-            let err;
+            let validation;
             if (path === "/login") {
-                const { error } = userSchema2.validate(user);
-                err = error;
-            }
-            else if (path === "/register") {
-                const { error } = userSchema1.validate(user);
-                err = error;
+                validation = userSchema2.validate(user);
             }
             else if (path === "/create") {
-                const { error } = countrySchema.validate(user);
-                err = error;
+                validation = countrySchema.validate(user);
             }
             else {
-                next();
+                validation = userSchema1.validate(user);
             }
-            if (err) {
-                next(createError(406, "Not Acceptable"));
+            if (validation.error) {
+                res.status(406);
+                res.json(validation.error);
             }
-            else {
-                next();
-            }
+            next();
         };
     }
 }
