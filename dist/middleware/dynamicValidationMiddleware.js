@@ -1,5 +1,10 @@
-import { userSchema1, userSchema2 } from "../utils/userSchema.js";
-import createError from "http-errors";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const userSchema_1 = require("../utils/userSchema");
+const http_errors_1 = __importDefault(require("http-errors"));
 class DynamicValidationMiddleware {
     constructor() {
         this.dynamicValidationMiddleware = (req, res, next) => {
@@ -9,16 +14,16 @@ class DynamicValidationMiddleware {
             let value;
             let error;
             if (path === "/login") {
-                ({ value, error } = userSchema2.validate(user));
+                ({ value, error } = userSchema_1.loginSchema.validate(user));
             }
             else if (path === "/register") {
-                ({ value, error } = userSchema1.validate(user));
+                ({ value, error } = userSchema_1.registerSchema.validate(user));
             }
             if (error) {
-                return next(createError(406, "Not Acceptable"));
+                return next((0, http_errors_1.default)(406, "Not Acceptable"));
             }
             next();
         };
     }
 }
-export default new DynamicValidationMiddleware().dynamicValidationMiddleware;
+exports.default = new DynamicValidationMiddleware().dynamicValidationMiddleware;

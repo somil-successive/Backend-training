@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class RegisterController {
     constructor() {
         this.register = (req, res) => {
@@ -5,4 +7,4 @@ class RegisterController {
         };
     }
 }
-export default new RegisterController().register;
+exports.default = new RegisterController().register;

@@ -1,9 +1,9 @@
 import express, { Application, NextFunction } from "express";
 import fs from "fs";
 import createError from "http-errors";
-import  errorHandlingMiddleware  from "./middleware/errorHandlingMiddleware.js";
+import  errorHandlingMiddleware  from "./middleware/errorHandlingMiddleware";
 import { Request, Response } from "express";
-import DataRouter from "./routes/dataRoutes.js";
+import DataRouter from "./routes/dataRoutes";
 
 
 

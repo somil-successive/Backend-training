@@ -1,14 +1,17 @@
-import data from "../utils/mockData.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mockData_1 = require("../utils/mockData");
 class DataController {
     constructor() {
         this.getData = (req, res) => {
-            res.json(data);
+            res.json(mockData_1.data);
         };
         this.postData = (req, res) => {
             const newD = req.body;
-            data.push(newD);
-            res.send(data);
+            console.log(newD);
+            mockData_1.data.push(newD);
+            res.send(mockData_1.data);
         };
     }
 }
-export default DataController;
+exports.default = DataController;

@@ -1,18 +1,18 @@
 import express, { Router } from "express";
-import authMiddleware from "../middleware/authMiddleware.js";
-import DataController from "../controllers/dataController.js";
-import customLogsMiddleware from "../middleware/customLogsMiddleware.js";
-import limitingReqMiddleware from "../middleware/limitingReqMiddleware.js";
-import checkNumParamMiddleware from "../middleware/checkNumParamMiddleware.js";
-import geoLocMiddleware from "../middleware/geoLocMiddleware.js";
-import dynamicValidationMiddleware from "../middleware/dynamicValidationMiddleware.js";
-import loginController from "../controllers/loginController.js";
-import registerController from "../controllers/registerController.js";
-import paramValidationMiddleware from "../middleware/paramValidationMiddleware.js";
-import asyncController from "../controllers/asyncController.js";
-import validationMiddleware from "../middleware/validationMiddleware.js";
-import healthCheckController from "../controllers/healthCheckController.js";
-import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware.js";
+import authMiddleware from "../middleware/authMiddleware";
+import DataController from "../controllers/dataController";
+import customLogsMiddleware from "../middleware/customLogsMiddleware";
+import limitingReqMiddleware from "../middleware/limitingReqMiddleware";
+import checkNumParamMiddleware from "../middleware/checkNumParamMiddleware";
+import geoLocMiddleware from "../middleware/geoLocMiddleware";
+import dynamicValidationMiddleware from "../middleware/dynamicValidationMiddleware";
+import loginController from "../controllers/loginController";
+import registerController from "../controllers/registerController";
+import paramValidationMiddleware from "../middleware/paramValidationMiddleware";
+import asyncController from "../controllers/asyncController";
+import validationMiddleware from "../middleware/validationMiddleware";
+import healthCheckController from "../controllers/healthCheckController";
+import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware";
 
 class DataRouter {
   private router: Router = Router();
@@ -32,10 +32,10 @@ class DataRouter {
 
     this.router.post(
       "/post",
-      limitingReqMiddleware,
-      new CustomHeaderMiddleware({ Coontent: "html" }).customHeaderMiddleware,
-      customLogsMiddleware,
-      validationMiddleware,
+      // limitingReqMiddleware,
+      // new CustomHeaderMiddleware({ Coontent: "html" }).customHeaderMiddleware,
+      // customLogsMiddleware,
+      // validationMiddleware,
       new DataController().postData
     );
 

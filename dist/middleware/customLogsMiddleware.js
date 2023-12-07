@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class CustomLogsMiddleware {
     constructor() {
         this.customLogsMiddleware = (req, res, next) => {
@@ -6,4 +8,4 @@ class CustomLogsMiddleware {
         };
     }
 }
-export default new CustomLogsMiddleware().customLogsMiddleware;
+exports.default = new CustomLogsMiddleware().customLogsMiddleware;

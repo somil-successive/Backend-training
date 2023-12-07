@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class LoginController {
     constructor() {
         this.login = (req, res) => {
@@ -5,4 +7,4 @@ class LoginController {
         };
     }
 }
-export default new LoginController().login;
+exports.default = new LoginController().login;

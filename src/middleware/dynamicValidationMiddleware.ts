@@ -1,4 +1,4 @@
-import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import { loginSchema, registerSchema } from "../utils/userSchema";
 import { Request, Response, NextFunction } from "express";
 import createError from "http-errors";
 
@@ -14,9 +14,9 @@ class DynamicValidationMiddleware {
     let value: any;
     let error: any;
     if (path === "/login") {
-      ({ value, error } = userSchema2.validate(user));
+      ({ value, error } = loginSchema.validate(user));
     } else if (path === "/register") {
-      ({ value, error } = userSchema1.validate(user));
+      ({ value, error } = registerSchema.validate(user));
     }
     if (error) {
       return next(createError(406, "Not Acceptable"));

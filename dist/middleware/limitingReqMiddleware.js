@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class LimitingReqMiddleware {
     constructor() {
         this.limitingReqMiddleware = (req, res, next) => {
@@ -27,4 +29,4 @@ class LimitingReqMiddleware {
         };
     }
 }
-export default new LimitingReqMiddleware().limitingReqMiddleware;
+exports.default = new LimitingReqMiddleware().limitingReqMiddleware;

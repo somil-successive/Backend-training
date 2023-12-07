@@ -1,9 +1,11 @@
-import { userSchema1 } from "../utils/userSchema.js";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const userSchema_1 = require("../utils/userSchema");
 class ValidationMiddleware {
     constructor() {
         this.validationMiddleware = (req, res, next) => {
             const user = req.body;
-            const { value, error } = userSchema1.validate(user);
+            const { value, error } = userSchema_1.registerSchema.validate(user);
             if (error) {
                 res.status(406);
                 res.send(error.details);
@@ -12,4 +14,4 @@ class ValidationMiddleware {
         };
     }
 }
-export default new ValidationMiddleware().validationMiddleware;
+exports.default = new ValidationMiddleware().validationMiddleware;

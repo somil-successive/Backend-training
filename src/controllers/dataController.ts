@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import data from "../utils/mockData.js";
+import {data} from "../utils/mockData";
 
 class DataController {
   public getData = (req: Request, res: Response): void => {
@@ -8,6 +8,7 @@ class DataController {
 
   public postData = (req: Request, res: Response): void => {
     const newD = req.body;
+    console.log(newD);
     data.push(newD);
     res.send(data);
   };

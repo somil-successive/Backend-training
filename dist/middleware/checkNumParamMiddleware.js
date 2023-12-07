@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class CheckNumParamMiddleware {
     constructor() {
         this.checkNumParamMiddleware = (req, res, next) => {
@@ -9,4 +11,4 @@ class CheckNumParamMiddleware {
         };
     }
 }
-export default new CheckNumParamMiddleware().checkNumParamMiddleware;
+exports.default = new CheckNumParamMiddleware().checkNumParamMiddleware;

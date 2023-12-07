@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class ErrorHandlingMiddleware {
     constructor() {
         this.errorHandlingMiddleware = (err, req, res, next) => {
@@ -6,4 +8,4 @@ class ErrorHandlingMiddleware {
         };
     }
 }
-export default new ErrorHandlingMiddleware().errorHandlingMiddleware;
+exports.default = new ErrorHandlingMiddleware().errorHandlingMiddleware;
