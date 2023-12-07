@@ -13,7 +13,8 @@ export const geoLocMiddleware = (req, res, next) => __awaiter(void 0, void 0, vo
     const key = "29f6aafef213de059431ac964c670b6d";
     const ip = "49.249.117.102";
     const response = yield axios.get(`http://api.ipstack.com/${ip}?access_key=${key}`);
-    const region = response.data.country_code;
+    const { country_code } = response.data;
+    const region = country_code;
     if (region !== "IN") {
         next(createHttpError(401, "Unauthorised User"));
     }

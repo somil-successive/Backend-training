@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import ICustomHeader from "../interface/ICustomHeader";
 
-export const customHeaderMiddleware = (customHeader: {}) => {
-
+export const customHeaderMiddleware = (customHeader: ICustomHeader) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       if (Object.keys(customHeader).length === 0) {

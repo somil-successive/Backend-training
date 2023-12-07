@@ -1,8 +1,9 @@
+import createError from "http-errors";
 export const checkNumParamMiddleware = (req, res, next) => {
     try {
-        const query = req.query;
-        if (!Number(query.id)) {
-            res.send("id is not a number");
+        const { id } = req.query;
+        if (!Number(id)) {
+            next(createError(406, "id is not a number"));
         }
         next();
     }

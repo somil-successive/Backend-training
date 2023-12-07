@@ -1,20 +1,25 @@
-import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import { ValidationResult } from "joi";
+import { loginSchema, registerSchema } from "../utils/userSchema.js";
 import { Request, Response, NextFunction } from "express";
+import IBody from "../interface/IBody.js";
 
 export const dynamicValidationMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const path = req.url;
-  const user = req.body;
-  let value: any;
-  let error: any;
+  const path: string = req.url;
+  const user: IBody = req.body;
+  let validation: ValidationResult;
   if (path === "/login") {
-    ({ value, error } = userSchema2.validate(user));
+    validation = loginSchema.validate(user);
   } else {
-    ({ value, error } = userSchema1.validate(user));
+    validation = registerSchema.validate(user);
   }
-  if (error) return res.json("Unauthorised User");
+  if (validation.error) {
+    res.status(406);
+    return res.json(validation.error);
+  }
+
   next();
 };

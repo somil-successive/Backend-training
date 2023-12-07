@@ -17,7 +17,6 @@ const dataRouter = express.Router();
 
 dataRouter.get(
   "/get",
-  paramValidationMiddleware,
   geoLocMiddleware,
   limitingReqMiddleware,
   customHeaderMiddleware({ content: "Text" }),
@@ -34,7 +33,7 @@ dataRouter.post(
 
   postData
 );
-dataRouter.post("/login", login);
+dataRouter.post("/login",dynamicValidationMiddleware, login);
 dataRouter.post("/register", dynamicValidationMiddleware, register);
 dataRouter.get("/async", asyncData);
 dataRouter.get("/:id", paramValidationMiddleware, paramController);

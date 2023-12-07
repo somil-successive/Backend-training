@@ -19,14 +19,6 @@ app.post("/api", function (req: Request, res: Response) {
 });
 
 app.use("/data", dataRoutes);
-
-app.use("/", (req: Request, res: Response, next: NextFunction) => {
-  return next(createError(404, "Not found"));
-});
-
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  res.status(err.status).send(err.message);
-});
 app.use(errorHandlingMiddleware);
 
 app.listen(4000, () => {
