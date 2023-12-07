@@ -2,14 +2,15 @@ import axios, { AxiosResponse } from "axios";
 import { Request, Response, NextFunction } from "express";
 import createHttpError from "http-errors";
 import { IResponse } from "../interface/IResponse";
+import { configurations } from "../utils/config";
 
 export const geoLocMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const key = "29f6aafef213de059431ac964c670b6d";
-  const ip = "49.249.117.102";
+  const key = configurations.key;
+  const ip = configurations.ip;
   const response: AxiosResponse = await axios.get(
     `http://api.ipstack.com/${ip}?access_key=${key}`
   );
