@@ -1,4 +1,4 @@
-interface ICustomHeader {
+export interface ICustomHeader {
   [key: string]: string;
 }
-export default ICustomHeader;
+ 

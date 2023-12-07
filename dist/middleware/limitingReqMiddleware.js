@@ -1,5 +1,11 @@
-import createHttpError from "http-errors";
-export const limitingReqMiddleware = (req, res, next) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.limitingReqMiddleware = void 0;
+const http_errors_1 = __importDefault(require("http-errors"));
+const limitingReqMiddleware = (req, res, next) => {
     let count = 0;
     let limit = 5;
     let currReqTime, initialReqTime = 0;
@@ -21,6 +27,7 @@ export const limitingReqMiddleware = (req, res, next) => {
         next();
     }
     else {
-        next(createHttpError(429, "Limit Exceeds"));
+        next((0, http_errors_1.default)(429, "Limit Exceeds"));
     }
 };
+exports.limitingReqMiddleware = limitingReqMiddleware;

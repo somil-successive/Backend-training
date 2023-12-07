@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import createError from "http-errors";
-import IQuery from "../interface/IQuery";
+import { IQuery } from "../interface/IQuery";
 export const paramValidationMiddleware = (
   req: Request,
   res: Response,

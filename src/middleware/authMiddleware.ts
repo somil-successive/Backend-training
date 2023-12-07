@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
 import { Request, Response, NextFunction } from "express";
-import { configurations } from "../utils/config.js";
+import { configurations } from "../utils/config";
 
 export const authMiddleware = (
   req: Request,

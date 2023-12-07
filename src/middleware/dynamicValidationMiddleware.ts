@@ -1,7 +1,7 @@
 import { ValidationResult } from "joi";
-import { loginSchema, registerSchema } from "../utils/userSchema.js";
+import { loginSchema, registerSchema } from "../utils/userSchema";
 import { Request, Response, NextFunction } from "express";
-import IBody from "../interface/IBody.js";
+import { IBody } from "../interface/IBody";
 
 export const dynamicValidationMiddleware = (
   req: Request,

@@ -1,8 +1,8 @@
 import express, { NextFunction } from "express";
-import dataRoutes from "./routes/dataRoutes.js";
+import {dataRouter} from "./routes/dataRoutes";
 import fs from "fs";
 import createError from "http-errors";
-import { errorHandlingMiddleware } from "./middleware/errorHandlingMiddleware.js";
+import { errorHandlingMiddleware } from "./middleware/errorHandlingMiddleware";
 import { Request, Response } from "express";
 const app = express();
 
@@ -18,7 +18,7 @@ app.post("/api", function (req: Request, res: Response) {
   res.json(req.body);
 });
 
-app.use("/data", dataRoutes);
+app.use("/data", dataRouter);
 app.use(errorHandlingMiddleware);
 
 app.listen(4000, () => {

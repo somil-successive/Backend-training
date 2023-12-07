@@ -1,4 +1,7 @@
-export const customHeaderMiddleware = (customHeader) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.customHeaderMiddleware = void 0;
+const customHeaderMiddleware = (customHeader) => {
     return (req, res, next) => {
         try {
             if (Object.keys(customHeader).length === 0) {
@@ -12,3 +15,4 @@ export const customHeaderMiddleware = (customHeader) => {
         }
     };
 };
+exports.customHeaderMiddleware = customHeaderMiddleware;

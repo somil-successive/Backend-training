@@ -1,4 +1,4 @@
-interface IQuery {
+export interface IQuery {
   id?: string;
 }
-export default IQuery;
+

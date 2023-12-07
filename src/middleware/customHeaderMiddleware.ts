@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import ICustomHeader from "../interface/ICustomHeader";
+import { ICustomHeader } from "../interface/ICustomHeader";
 
 export const customHeaderMiddleware = (customHeader: ICustomHeader) => {
   return (req: Request, res: Response, next: NextFunction) => {

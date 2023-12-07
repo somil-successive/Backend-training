@@ -1,10 +1,16 @@
-import Joi from "joi";
-export const registerSchema = Joi.object({
-    username: Joi.string().alphanum().min(3).max(30).required(),
-    email: Joi.string().email().required(),
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.loginSchema = exports.registerSchema = void 0;
+const joi_1 = __importDefault(require("joi"));
+exports.registerSchema = joi_1.default.object({
+    username: joi_1.default.string().alphanum().min(3).max(30).required(),
+    email: joi_1.default.string().email().required(),
+    password: joi_1.default.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
 });
-export const loginSchema = Joi.object({
-    username: Joi.string().alphanum().min(3).max(30).required(),
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+exports.loginSchema = joi_1.default.object({
+    username: joi_1.default.string().alphanum().min(3).max(30).required(),
+    password: joi_1.default.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
 });
