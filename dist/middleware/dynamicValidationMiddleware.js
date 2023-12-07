@@ -1,4 +1,4 @@
-import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import { countrySchema, userSchema1, userSchema2, } from "../utils/userSchema.js";
 import createError from "http-errors";
 class DynamicValidationMiddleware {
     constructor() {
@@ -15,10 +15,19 @@ class DynamicValidationMiddleware {
                 const { error } = userSchema1.validate(user);
                 err = error;
             }
-            if (err) {
-                return next(createError(406, "Not Acceptable"));
+            else if (path === "/create") {
+                const { error } = countrySchema.validate(user);
+                err = error;
             }
-            next();
+            else {
+                next();
+            }
+            if (err) {
+                next(createError(406, "Not Acceptable"));
+            }
+            else {
+                next();
+            }
         };
     }
 }

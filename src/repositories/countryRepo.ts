@@ -8,5 +8,15 @@ class CountryRepo {
   public createData = async (data: ICountry) => {
     await countryModel.create(data);
   };
+  public updateDataByName = async (name: ICountry, newData: ICountry) => {
+    await countryModel.updateOne(
+      { name: name },
+      {
+        $set: {
+          captain: newData.captain,
+        },
+      }
+    );
+  };
 }
 export default CountryRepo;
