@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema<IUser>({
   email: { type: String },
   phone: { type: String },
   address: { type: String },
-  password: { type: String }
+  password: { type: String },
 });
 
 const User = mongoose.model<IUser>("User", userSchema);

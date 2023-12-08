@@ -12,5 +12,8 @@ class Service {
   public create = async (data: IBlogs) => {
     await this.repos.create(data);
   };
+  public getByName = async (title: string) => {
+    return await this.repos.getByTitle(title);
+  };
 }
 export default Service;

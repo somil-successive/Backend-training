@@ -11,26 +11,20 @@ class Controller {
   };
 
   public createUser = async (req: Request, res: Response) => {
-    const user:IUser = req.body;
+    const user: IUser = req.body;
     await this.userService.createUser(user);
     res.json({ message: "Registered Successfully" });
   };
 
   public getByName = async (req: Request, res: Response) => {
     const { name } = req.params;
-    console.log("name",name);
-    
     const data = await this.userService.getByName(name);
-    console.log(data);
     res.json(data);
   };
 
   public getByEmail = async (req: Request, res: Response) => {
     const { email } = req.params;
-    console.log("email", email);
-    
     const data = await this.userService.getByEmail(email);
-    console.log(data);
     res.json(data);
   };
 

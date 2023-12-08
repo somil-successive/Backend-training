@@ -2,6 +2,7 @@ import { userSchema1, userSchema2 } from "../utils/userSchema.js";
 import { Request, Response, NextFunction } from "express";
 import Joi from "joi";
 import schema from "../Modules/Users/validation.js";
+import { blogShema } from "../Modules/Blogs/validation.js";
 
 class DynamicValidationMiddleware {
   public dynamicValidationMiddleware = (
@@ -16,6 +17,8 @@ class DynamicValidationMiddleware {
       validation = userSchema2.validate(user);
     } else if (path === "/register") {
       validation = schema.validate(user);
+    } else if (path === "/create") {
+      validation = blogShema.validate(user);
     } else {
       validation = userSchema1.validate(user);
     }

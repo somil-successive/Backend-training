@@ -1,9 +1,11 @@
 import express from "express";
 import Controller from "./Controller.js";
+import dynamicValidationMiddleware from "../../middleware/dynamicValidationMiddleware.js";
 
 const bRouter = express.Router();
 const controller = new Controller();
 bRouter.get("/get", controller.getAll);
-bRouter.post("/create", controller.create);
+bRouter.post("/create", dynamicValidationMiddleware, controller.create);
+bRouter.get("/getbytitle", controller.getByName);
 
 export default bRouter;

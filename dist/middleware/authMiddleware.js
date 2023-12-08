@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import createError from "http-errors";
 import { configurations } from "../utils/config.js";
+import createHttpError from "http-errors";
 class AuthMiddlewarwe {
     constructor() {
         this.authMiddleware = (req, res, next) => {
@@ -15,7 +16,7 @@ class AuthMiddlewarwe {
                 }
             }
             catch (error) {
-                next(createError(401, "Unauthorized -Invalid token"));
+                next(createHttpError(401, "Unauthorized -Invalid token"));
             }
         };
     }

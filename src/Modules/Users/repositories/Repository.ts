@@ -18,6 +18,5 @@ class Repo extends BaseRepo<IUser> {
   public deleteByName = async (name: string) => {
     return await User.findOneAndDelete({ name });
   };
-
 }
 export default Repo;
