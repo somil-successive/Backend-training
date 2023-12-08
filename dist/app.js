@@ -11,7 +11,7 @@ class App {
         this.app = (0, express_1.default)();
         this.setRoutes = () => {
             const dataRouter = new dataRoutes_1.default();
-            this.app.use('/data', dataRouter.getRouter());
+            this.app.use("/data", dataRouter.getRouter());
         };
         this.setErrorHandler = () => {
             this.app.use(errorHandlingMiddleware_1.default);
@@ -21,8 +21,8 @@ class App {
                 console.log(`server is running on PORT ${PORT}`);
             });
         };
-        this.setRoutes();
         this.app.use(express_1.default.json());
+        this.setRoutes();
         this.setErrorHandler();
     }
 }

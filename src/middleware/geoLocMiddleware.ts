@@ -1,10 +1,12 @@
 import axios from "axios";
 import { Request, Response, NextFunction } from "express";
-import createError from "http-errors";
+import { configurations } from "../utils/config";
+import createHttpError from "http-errors";
+import { IResponse } from "../interface/IResponse";
 
 class GeoLocationMiddleware {
-  private key = "29f6aafef213de059431ac964c670b6d";
-  private ip = "49.249.117.102";
+  private key = configurations.key;
+  private ip = configurations.ip;
 
   public geoLocMiddleware = async (
     req: Request,
@@ -14,11 +16,12 @@ class GeoLocationMiddleware {
     const response = await axios.get(
       `http://api.ipstack.com/${this.ip}?access_key=${this.key}`
     );
-    const region = response.data.country_name;
-    console.log(response);
-    if (region !== "India") {
-      return next(createError(401, "Unauthorised User"));
-    }
+    const data: IResponse = response.data;
+  const { country_code } = data;
+  const region: string = country_code;
+  if (region !== "IN") {
+    next(createHttpError(401, "Unauthorised User"));
+  }
     next();
   };
 }

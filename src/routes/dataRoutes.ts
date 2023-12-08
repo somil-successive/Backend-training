@@ -13,6 +13,7 @@ import asyncController from "../controllers/asyncController";
 import validationMiddleware from "../middleware/validationMiddleware";
 import healthCheckController from "../controllers/healthCheckController";
 import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware";
+import paramController from "../controllers/paramController";
 
 class DataRouter {
   private router: Router = Router();
@@ -32,10 +33,11 @@ class DataRouter {
 
     this.router.post(
       "/post",
-      // limitingReqMiddleware,
-      // new CustomHeaderMiddleware({ Coontent: "html" }).customHeaderMiddleware,
-      // customLogsMiddleware,
-      // validationMiddleware,
+      limitingReqMiddleware,
+      new CustomHeaderMiddleware({ Coontent: "html" }).customHeaderMiddleware,
+      customLogsMiddleware,
+      authMiddleware,
+      validationMiddleware,
       new DataController().postData
     );
 
@@ -46,6 +48,7 @@ class DataRouter {
       registerController
     );
     this.router.get("/async", asyncController);
+    this.router.get("/:id", paramValidationMiddleware, paramController);
     this.router.get("/health", healthCheckController);
   };
 

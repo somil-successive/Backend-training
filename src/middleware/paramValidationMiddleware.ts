@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
-import createError from "http-errors";
+import createHttpError from "http-errors";
 class ParamValidationMiddleware {
   paramValidationMiddleware = (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
-    const { id } = req.query;
+    const { id } = req.params;
     if (!Number(id)) {
-      return next(createError(406, "Not Valid Params"));
+      return next(createHttpError(406, "Not Valid Params"));
     }
     next();
   };

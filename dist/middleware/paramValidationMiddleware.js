@@ -7,7 +7,7 @@ const http_errors_1 = __importDefault(require("http-errors"));
 class ParamValidationMiddleware {
     constructor() {
         this.paramValidationMiddleware = (req, res, next) => {
-            const { id } = req.query;
+            const { id } = req.params;
             if (!Number(id)) {
                 return next((0, http_errors_1.default)(406, "Not Valid Params"));
             }

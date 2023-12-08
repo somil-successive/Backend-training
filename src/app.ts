@@ -1,39 +1,31 @@
 import express, { Application, NextFunction } from "express";
-import fs from "fs";
-import createError from "http-errors";
-import  errorHandlingMiddleware  from "./middleware/errorHandlingMiddleware";
+import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware";
 import { Request, Response } from "express";
 import DataRouter from "./routes/dataRoutes";
 
+class App {
+  private app: Application = express();
 
+  private setRoutes = (): void => {
+    const dataRouter: DataRouter = new DataRouter();
+    this.app.use("/data", dataRouter.getRouter());
+  };
 
-class App{
-
-  private app : Application = express();
-
-  private setRoutes = () : void=>{
-    const dataRouter : DataRouter = new DataRouter();
-    this.app.use('/data', dataRouter.getRouter());
-  }
-
-  private setErrorHandler = () : void =>{
+  private setErrorHandler = (): void => {
     this.app.use(errorHandlingMiddleware);
-  }
+  };
 
-  constructor(){
-    this.setRoutes();
+  constructor() {
     this.app.use(express.json());
+    this.setRoutes();
     this.setErrorHandler();
   }
 
-
-  public startServer = (PORT : number) : void=>{
-    this.app.listen(PORT, ()=>{
+  public startServer = (PORT: number): void => {
+    this.app.listen(PORT, () => {
       console.log(`server is running on PORT ${PORT}`);
-    })
-  }
+    });
+  };
 }
 
 export default new App();
-
-

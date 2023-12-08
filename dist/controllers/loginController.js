@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class LoginController {
     constructor() {
         this.login = (req, res) => {
-            res.json("User Authorised");
+            res.json({ message: "Login succesfull" });
         };
     }
 }

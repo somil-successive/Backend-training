@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from "express";
+import createHttpError from "http-errors";
+import { IQuery } from "../interface/IQuery";
 
 class CheckNumParamMiddleware {
   public checkNumParamMiddleware = (
@@ -6,11 +8,15 @@ class CheckNumParamMiddleware {
     res: Response,
     next: NextFunction
   ): void => {
-    const query = req.query;
-    if (!Number(query.id)) {
-      res.send("Query is not a number");
+    try {
+      const { id }: IQuery = req.query;
+      if (!Number(id)) {
+        next(createHttpError(406, "id is not a number"));
+      }
+      next();
+    } catch (err) {
+      next(err);
     }
-    next();
   };
 }
 export default new CheckNumParamMiddleware().checkNumParamMiddleware;

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import createHttpError from "http-errors";
 
 class LimitingReqMiddleware {
   public limitingReqMiddleware = (
@@ -7,25 +8,25 @@ class LimitingReqMiddleware {
     next: NextFunction
   ): void => {
     let count = 0;
-    let limit = 5;
-    let time: number,
-      time1: number = 0;
-    if (count === 0) {
-      time1 = new Date().getSeconds();
-      time = new Date().getSeconds();
-    } else {
-      time = new Date().getSeconds();
-      if (time < time1) time += 59;
-    }
-    if (count < limit && time <= time1 + 5) {
-      count++;
-      next();
-    } else if (time > time1 + 5) {
-      count = 0;
-      next();
-    } else {
-      res.status(429).send("Limit Exceeds");
-    }
-  };
+  let limit = 5;
+  let currReqTime: number,
+    initialReqTime: number = 0;
+  if (count === 0) {
+    initialReqTime = new Date().getSeconds();
+    currReqTime = new Date().getSeconds();
+  } else {
+    currReqTime = new Date().getSeconds();
+    if (currReqTime < initialReqTime) currReqTime += 59;
+  }
+  if (count < limit && currReqTime <= initialReqTime + 5) {
+    count++;
+    next();
+  } else if (currReqTime > initialReqTime + 5) {
+    count = 0;
+    next();
+  } else {
+    next(createHttpError(429, "Limit Exceeds"));
+  }
+};
 }
 export default new LimitingReqMiddleware().limitingReqMiddleware;

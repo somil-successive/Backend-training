@@ -18,7 +18,7 @@ class AsyncController {
                 }, 3000);
             });
             try {
-                const response = yield myPromise;
+                yield myPromise;
             }
             catch (err) {
                 res.status(400).json({ error: err });

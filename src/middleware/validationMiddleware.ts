@@ -1,4 +1,4 @@
-import { registerSchema} from "../utils/userSchema";
+import { registerSchema } from "../utils/userSchema";
 import { Request, Response, NextFunction } from "express";
 
 class ValidationMiddleware {
@@ -8,12 +8,11 @@ class ValidationMiddleware {
     next: NextFunction
   ): void => {
     const user = req.body;
-    const { value, error } = registerSchema.validate(user);
+    const { error } = registerSchema.validate(user);
     if (error) {
       res.status(406);
-      res.send(error.details);
+      res.json(error);
     }
-
     next();
   };
 }

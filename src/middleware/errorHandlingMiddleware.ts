@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
+import { HttpError } from "http-errors";
 
 class ErrorHandlingMiddleware {
   public errorHandlingMiddleware = (
-    err: Error,
+    err: HttpError,
     req: Request,
     res: Response,
     next: NextFunction
   ): void => {
-    console.log(err);
-    res.send(err.message);
+    res.status(err.status).json({ error: err.message });
   };
 }
 export default new ErrorHandlingMiddleware().errorHandlingMiddleware;

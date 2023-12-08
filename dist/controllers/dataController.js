@@ -8,7 +8,6 @@ class DataController {
         };
         this.postData = (req, res) => {
             const newD = req.body;
-            console.log(newD);
             mockData_1.data.push(newD);
             res.send(mockData_1.data);
         };

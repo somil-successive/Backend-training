@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import createError from "http-errors";
 import { Request, Response, NextFunction } from "express";
 import { configurations } from "../utils/config";
+import createHttpError from "http-errors";
 
 class AuthMiddlewarwe {
   public authMiddleware = (
@@ -12,13 +12,13 @@ class AuthMiddlewarwe {
     try {
       const token = req.headers.authorization;
       if (!token) {
-        next(createError(403, "Unauthorized - Token not provided."));
+        next(createHttpError(403, "Unauthorized - Token not provided."));
       } else {
         const decodedUser = jwt.verify(token ?? "", configurations.secretKey);
         next();
       }
     } catch (error) {
-      next(createError(401, "Unauthorized -Invalid token"));
+      next(createHttpError(401, "Unauthorized -Invalid token"));
     }
   };
 }

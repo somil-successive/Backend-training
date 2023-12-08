@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import createError from "http-errors";
 
 class CustomHeaderMiddleware {
   public customHeader: object;
@@ -11,11 +10,15 @@ class CustomHeaderMiddleware {
     res: Response,
     next: NextFunction
   ): void => {
-    if (Object.keys(this.customHeader).length === 0) {
-      return next(createError(411, "No Headers Added"));
+    try {
+      if (Object.keys(this.customHeader).length === 0) {
+        throw new Error("No custom header added");
+      }
+      res.set(this.customHeader);
+      next();
+    } catch (error) {
+      next(error);
     }
-    res.set(this.customHeader);
-    next();
   };
 }
 

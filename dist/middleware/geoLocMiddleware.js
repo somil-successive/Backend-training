@@ -13,17 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
+const config_1 = require("../utils/config");
 const http_errors_1 = __importDefault(require("http-errors"));
 class GeoLocationMiddleware {
     constructor() {
-        this.key = "29f6aafef213de059431ac964c670b6d";
-        this.ip = "49.249.117.102";
+        this.key = config_1.configurations.key;
+        this.ip = config_1.configurations.ip;
         this.geoLocMiddleware = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const response = yield axios_1.default.get(`http://api.ipstack.com/${this.ip}?access_key=${this.key}`);
-            const region = response.data.country_name;
-            console.log(response);
-            if (region !== "India") {
-                return next((0, http_errors_1.default)(401, "Unauthorised User"));
+            const data = response.data;
+            const { country_code } = data;
+            const region = country_code;
+            if (region !== "IN") {
+                next((0, http_errors_1.default)(401, "Unauthorised User"));
             }
             next();
         });

@@ -1,6 +1,7 @@
 import { loginSchema, registerSchema } from "../utils/userSchema";
 import { Request, Response, NextFunction } from "express";
-import createError from "http-errors";
+import { ValidationResult } from "joi";
+import { IBody } from "../interface/IBody";
 
 class DynamicValidationMiddleware {
   public dynamicValidationMiddleware = (
@@ -8,19 +9,19 @@ class DynamicValidationMiddleware {
     res: Response,
     next: NextFunction
   ): void => {
-    const path = req.url;
-    console.log(path);
-    const user = req.body;
-    let value: any;
-    let error: any;
+    const path: string = req.url;
+    const user: IBody = req.body;
+    let validation: ValidationResult;
     if (path === "/login") {
-      ({ value, error } = loginSchema.validate(user));
-    } else if (path === "/register") {
-      ({ value, error } = registerSchema.validate(user));
+      validation = loginSchema.validate(user);
+    } else {
+      validation = registerSchema.validate(user);
     }
-    if (error) {
-      return next(createError(406, "Not Acceptable"));
+    if (validation.error) {
+      res.status(406);
+      res.json(validation.error);
     }
+
     next();
   };
 }
