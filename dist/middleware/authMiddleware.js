@@ -25,4 +25,4 @@ class AuthMiddlewarwe {
         };
     }
 }
-exports.default = new AuthMiddlewarwe().authMiddleware;
+exports.default = AuthMiddlewarwe;

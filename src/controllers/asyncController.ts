@@ -16,4 +16,4 @@ class AsyncController {
   };
 }
 
-export default new AsyncController().asyncData;
+export default AsyncController;

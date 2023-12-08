@@ -13,4 +13,4 @@ class ParamValidationMiddleware {
     next();
   };
 }
-export default new ParamValidationMiddleware().paramValidationMiddleware;
+export default ParamValidationMiddleware;

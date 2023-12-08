@@ -9,7 +9,7 @@ class DataController {
   public postData = (req: Request, res: Response): void => {
     const newD = req.body;
     data.push(newD);
-  
+
     res.send(data);
   };
 }

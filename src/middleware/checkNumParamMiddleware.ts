@@ -19,4 +19,4 @@ class CheckNumParamMiddleware {
     }
   };
 }
-export default new CheckNumParamMiddleware().checkNumParamMiddleware;
+export default CheckNumParamMiddleware;

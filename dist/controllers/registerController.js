@@ -7,4 +7,4 @@ class RegisterController {
         };
     }
 }
-exports.default = new RegisterController().register;
+exports.default = RegisterController;

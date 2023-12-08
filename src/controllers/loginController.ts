@@ -5,4 +5,4 @@ class LoginController {
     res.json({ message: "Login succesfull" });
   };
 }
-export default new LoginController().login;
+export default LoginController;

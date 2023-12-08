@@ -8,4 +8,4 @@ class CustomLogsMiddleware {
         };
     }
 }
-exports.default = new CustomLogsMiddleware().customLogsMiddleware;
+exports.default = CustomLogsMiddleware;

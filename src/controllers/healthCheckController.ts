@@ -5,4 +5,4 @@ class HealthCheckController {
     res.json({ Health: "OK" });
   };
 }
-export default new HealthCheckController().healthChecker;
+export default HealthCheckController;

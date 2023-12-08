@@ -14,4 +14,4 @@ class ValidationMiddleware {
         };
     }
 }
-exports.default = new ValidationMiddleware().validationMiddleware;
+exports.default = ValidationMiddleware;

@@ -7,4 +7,4 @@ class ErrorHandlingMiddleware {
         };
     }
 }
-exports.default = new ErrorHandlingMiddleware().errorHandlingMiddleware;
+exports.default = ErrorHandlingMiddleware;

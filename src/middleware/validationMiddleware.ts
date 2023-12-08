@@ -16,4 +16,4 @@ class ValidationMiddleware {
     next();
   };
 }
-export default new ValidationMiddleware().validationMiddleware;
+export default ValidationMiddleware;

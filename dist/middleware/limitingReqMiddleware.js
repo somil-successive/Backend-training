@@ -33,4 +33,4 @@ class LimitingReqMiddleware {
         };
     }
 }
-exports.default = new LimitingReqMiddleware().limitingReqMiddleware;
+exports.default = LimitingReqMiddleware;

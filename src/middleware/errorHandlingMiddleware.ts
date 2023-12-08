@@ -11,4 +11,4 @@ class ErrorHandlingMiddleware {
     res.status(err.status).json({ error: err.message });
   };
 }
-export default new ErrorHandlingMiddleware().errorHandlingMiddleware;
+export default ErrorHandlingMiddleware;

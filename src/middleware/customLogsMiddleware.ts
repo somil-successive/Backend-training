@@ -12,4 +12,4 @@ class CustomLogsMiddleware {
     next();
   };
 }
-export default new CustomLogsMiddleware().customLogsMiddleware;
+export default CustomLogsMiddleware;

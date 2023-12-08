@@ -17,12 +17,12 @@ class GeoLocationMiddleware {
       `http://api.ipstack.com/${this.ip}?access_key=${this.key}`
     );
     const data: IResponse = response.data;
-  const { country_code } = data;
-  const region: string = country_code;
-  if (region !== "IN") {
-    next(createHttpError(401, "Unauthorised User"));
-  }
+    const { country_code } = data;
+    const region: string = country_code;
+    if (region !== "IN") {
+      next(createHttpError(401, "Unauthorised User"));
+    }
     next();
   };
 }
-export default new GeoLocationMiddleware().geoLocMiddleware;
+export default GeoLocationMiddleware;

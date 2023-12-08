@@ -31,4 +31,4 @@ class GeoLocationMiddleware {
         });
     }
 }
-exports.default = new GeoLocationMiddleware().geoLocMiddleware;
+exports.default = GeoLocationMiddleware;

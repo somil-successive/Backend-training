@@ -1,10 +1,16 @@
-import express, { Application, NextFunction } from "express";
-import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware";
-import { Request, Response } from "express";
+import express, { Application } from "express";
 import DataRouter from "./routes/dataRoutes";
+import ErrorHandlingMiddleware from "./middleware/errorHandlingMiddleware";
 
 class App {
   private app: Application = express();
+  private errorHandlingObj = new ErrorHandlingMiddleware();
+
+  constructor() {
+    this.app.use(express.json());
+    this.setRoutes();
+    this.setErrorHandler();
+  }
 
   private setRoutes = (): void => {
     const dataRouter: DataRouter = new DataRouter();
@@ -12,14 +18,8 @@ class App {
   };
 
   private setErrorHandler = (): void => {
-    this.app.use(errorHandlingMiddleware);
+    this.app.use(this.errorHandlingObj.errorHandlingMiddleware);
   };
-
-  constructor() {
-    this.app.use(express.json());
-    this.setRoutes();
-    this.setErrorHandler();
-  }
 
   public startServer = (PORT: number): void => {
     this.app.listen(PORT, () => {
@@ -28,4 +28,4 @@ class App {
   };
 }
 
-export default new App();
+export default App;

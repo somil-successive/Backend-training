@@ -15,4 +15,4 @@ class ParamValidationMiddleware {
         };
     }
 }
-exports.default = new ParamValidationMiddleware().paramValidationMiddleware;
+exports.default = ParamValidationMiddleware;

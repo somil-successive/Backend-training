@@ -5,4 +5,4 @@ class RegisterController {
     res.json("Registered Successfully");
   };
 }
-export default new RegisterController().register;
+export default RegisterController;
