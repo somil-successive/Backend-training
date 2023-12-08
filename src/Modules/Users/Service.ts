@@ -9,12 +9,26 @@ class Service {
   }
 
   public createUser = async (user: IUser) => {
-    await this.repo.createUser(user);
+    await this.repo.create(user);
   };
 
   public getAllUSers = async () => {
-    return await this.repo.getAllUsers();
+    return await this.repo.getAll();
   };
+
+  public getByName = async (name:string) => {
+    return await this.repo.getByName(name);
+  };
+
+  public getByEmail = async (email:string) => {
+    return await this.repo.getByEmail(email);
+  };
+
+
+  public deleteByName=async(name:string)=>{
+    return await this.repo.deleteByName(name);
+
+  }
 }
 
 export default Service;

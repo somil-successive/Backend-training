@@ -12,5 +12,9 @@ router.post(
   dynamicValidationMiddleware,
   userController.createUser
 );
+router.get("/get/:name", userController.getByName);
+router.get("/getuser/:email", userController.getByEmail);
+router.delete("/delete/:name", userController.deleteByName);
+router.post("/login", userController.login);
 
 export default router;
