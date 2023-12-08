@@ -11,16 +11,16 @@ import express from "express";
 import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware.js";
 import DataRouter from "./routes/dataRoutes.js";
 import Connection from "./libs/databaseConnection.js";
-import userRoutes from './routes/userRoutes.js';
-import countryRouter from "./routes/countryRoutes.js";
+import router from "./Modules/Users/routes.js";
+import bRouter from "./Modules/Blogs/routes.js";
 class App {
     constructor() {
         this.app = express();
         this.setRoutes = () => {
             const dataRouter = new DataRouter();
-            this.app.use('/data', dataRouter.getRouter());
-            this.app.use('/user', userRoutes);
-            this.app.use('/country', countryRouter);
+            this.app.use("/data", dataRouter.getRouter());
+            this.app.use("/user", router);
+            this.app.use("/blogs", bRouter);
         };
         this.setErrorHandler = () => {
             this.app.use(errorHandlingMiddleware);

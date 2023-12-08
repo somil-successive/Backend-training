@@ -1,4 +1,5 @@
-import { countrySchema, userSchema1, userSchema2, } from "../utils/userSchema.js";
+import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import schema from "../Modules/Users/validation.js";
 class DynamicValidationMiddleware {
     constructor() {
         this.dynamicValidationMiddleware = (req, res, next) => {
@@ -8,8 +9,8 @@ class DynamicValidationMiddleware {
             if (path === "/login") {
                 validation = userSchema2.validate(user);
             }
-            else if (path === "/create") {
-                validation = countrySchema.validate(user);
+            else if (path === "/register") {
+                validation = schema.validate(user);
             }
             else {
                 validation = userSchema1.validate(user);
@@ -18,7 +19,9 @@ class DynamicValidationMiddleware {
                 res.status(406);
                 res.json(validation.error);
             }
-            next();
+            else {
+                next();
+            }
         };
     }
 }

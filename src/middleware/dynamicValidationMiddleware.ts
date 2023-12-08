@@ -1,10 +1,7 @@
-import {
-  countrySchema,
-  userSchema1,
-  userSchema2,
-} from "../utils/userSchema.js";
+import { userSchema1, userSchema2 } from "../utils/userSchema.js";
 import { Request, Response, NextFunction } from "express";
 import Joi from "joi";
+import schema from "../Modules/Users/validation.js";
 
 class DynamicValidationMiddleware {
   public dynamicValidationMiddleware = (
@@ -17,17 +14,17 @@ class DynamicValidationMiddleware {
     let validation: Joi.ValidationResult;
     if (path === "/login") {
       validation = userSchema2.validate(user);
-    } else if (path === "/create") {
-      validation = countrySchema.validate(user);
+    } else if (path === "/register") {
+      validation = schema.validate(user);
     } else {
       validation = userSchema1.validate(user);
     }
     if (validation.error) {
       res.status(406);
       res.json(validation.error);
+    } else {
+      next();
     }
-
-    next();
   };
 }
 export default new DynamicValidationMiddleware().dynamicValidationMiddleware;

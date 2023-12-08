@@ -5,10 +5,9 @@ class ErrorHandlingMiddleware {
   public errorHandlingMiddleware = (
     err: HttpError,
     req: Request,
-    res: Response,
-    
+    res: Response
   ): void => {
-    res.status(err.status).json(err.message);
+    res.status(err.status).json({ error: err.message });
   };
 }
 export default new ErrorHandlingMiddleware().errorHandlingMiddleware;

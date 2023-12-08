@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import UserService from "../services/userService.js";
+import Service from "./Service.js";
 
-class UserController {
-  private userService = new UserService();
+class Controller {
+  private userService = new Service();
 
   public getAllUsers = async (req: Request, res: Response) => {
     const data = await this.userService.getAllUSers();
@@ -12,7 +12,7 @@ class UserController {
   public createUser = async (req: Request, res: Response) => {
     const user = req.body;
     await this.userService.createUser(user);
-    res.json({message:"user has been created"});
+    res.json({ message: "Registered Successfully" });
   };
 }
-export default UserController;
+export default Controller;
