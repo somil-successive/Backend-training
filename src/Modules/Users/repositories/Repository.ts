@@ -1,4 +1,3 @@
-import { string } from "joi";
 import BaseRepo from "../../../libs/base/BaseRepo.js";
 import { IUser } from "../entity/IUser.js";
 import User from "./Schema.js";
@@ -7,11 +6,11 @@ class Repo extends BaseRepo<IUser> {
   constructor() {
     super(User);
   }
-  public getByName = async (name: string) => {
+  public getByName = async (name: string): Promise<IUser | null> => {
     return await User.findOne({ name });
   };
 
-  public getByEmail = async (email: string) => {
+  public getByEmail = async (email: string): Promise<IUser | null> => {
     return await User.findOne({ email });
   };
 

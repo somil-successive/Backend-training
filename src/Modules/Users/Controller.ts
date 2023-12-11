@@ -40,8 +40,15 @@ class Controller {
     if (data.password === registeredData?.password) {
       res.json({ message: "Login successful" });
     } else {
-      res.status(401).json({ error: "please sign up" });
+      res.status(401).json({ error: "Wrong credentials" });
     }
+  };
+
+  public update = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const newData = req.body;
+    await this.userService.update(id, newData);
+    res.json({ message: "Data has been updated successfully!" });
   };
 }
 export default Controller;

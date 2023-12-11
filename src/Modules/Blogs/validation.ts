@@ -5,6 +5,7 @@ export const blogShema = Joi.object({
   body: Joi.string().min(10).max(1000).required(),
   createdAt: Joi.date(),
   likes: Joi.string(),
+  categories:Joi.array(),
   imageUrl: Joi.string(),
   isSensitive: Joi.boolean(),
 });

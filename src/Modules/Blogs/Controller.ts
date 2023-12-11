@@ -13,9 +13,14 @@ class Controller {
     this.service.create(data);
     res.json({ message: "Blogs has been successfully created" });
   };
-  public getByName = async (req: Request, res: Response) => {
+  public getByTitle = async (req: Request, res: Response) => {
     const { title } = req.body;
     const data = await this.service.getByName(title);
+  };
+  public deleteByTitle = async (req: Request, res: Response) => {
+    const { title } = req.params;
+    await this.service.deleteByTitle(title);
+    res.json({ message: "Blog has been deleted" });
   };
 }
 export default Controller;

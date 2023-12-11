@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import createError from "http-errors";
 import { configurations } from "../utils/config.js";
 import createHttpError from "http-errors";
 class AuthMiddlewarwe {
@@ -8,7 +7,7 @@ class AuthMiddlewarwe {
             try {
                 const token = req.headers.authorization;
                 if (!token) {
-                    next(createError(403, "Unauthorized - Token not provided."));
+                    next(createHttpError(403, "Unauthorized - Token not provided."));
                 }
                 else {
                     jwt.verify(token !== null && token !== void 0 ? token : "", configurations.secretKey);

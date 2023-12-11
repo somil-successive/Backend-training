@@ -11,5 +11,9 @@ class Repo extends BaseRepo<IBlogs> {
   public getByTitle = async (title: string) => {
     return await model.findOne({ title });
   };
+
+  public deleteByTitle = async (title: string) => {
+    return await model.findOneAndDelete({ title });
+  };
 }
 export default Repo;

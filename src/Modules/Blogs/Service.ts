@@ -15,5 +15,8 @@ class Service {
   public getByName = async (title: string) => {
     return await this.repos.getByTitle(title);
   };
+  public deleteByTitle = async (title: string) => {
+    return await this.repos.deleteByTitle(title);
+  };
 }
 export default Service;

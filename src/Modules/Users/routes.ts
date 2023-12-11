@@ -17,5 +17,6 @@ router.get("/get/:name", userController.getByName);
 router.get("/getuser/:email", userController.getByEmail);
 router.delete("/delete/:name", userController.deleteByName);
 router.post("/login", authMiddleware, userController.login);
+router.post("/update/:id", userController.update);
 
 export default router;

@@ -6,6 +6,7 @@ const bRouter = express.Router();
 const controller = new Controller();
 bRouter.get("/get", controller.getAll);
 bRouter.post("/create", dynamicValidationMiddleware, controller.create);
-bRouter.get("/getbytitle", controller.getByName);
+bRouter.get("/getbytitle", controller.getByTitle);
+bRouter.get("/delete/:title", controller.deleteByTitle);
 
 export default bRouter;

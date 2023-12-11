@@ -5,5 +5,6 @@ export interface IBlogs {
   lastEdited: Date;
   likes: string;
   imageUrl: Buffer;
+  categories:Array<String>;
   isSensitive: boolean;
 }

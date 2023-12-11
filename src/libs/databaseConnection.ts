@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
+import { configurations } from "../utils/config.js";
 
 class Connection {
-  private mongoUri: string = "mongodb://127.0.0.1:27017/test";
-
   public connectDB = async (): Promise<void> => {
     try {
-      await mongoose.connect(this.mongoUri);
+      await mongoose.connect(configurations.mongoUri);
 
       console.log("MongoDB is connected successfully.");
     } catch (err) {
