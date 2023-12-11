@@ -1,15 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-
-import createError from "http-errors";
-import { IQuery } from "../interface/IQuery";
-export const paramValidationMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { id }: IQuery = req.params;
-  if (!Number(id)) {
-    next(createError(406, "Not Valid Params"));
-  }
-  next();
-};
+import createHttpError from "http-errors";
+class ParamValidationMiddleware {
+  paramValidationMiddleware = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { id } = req.params;
+    if (!Number(id)) {
+      return next(createHttpError(406, "Not Valid Params"));
+    }
+    next();
+  };
+}
+export default ParamValidationMiddleware;

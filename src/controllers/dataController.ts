@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
-import {data} from "../utils/mockData";
+import { data } from "../utils/mockData";
 
-const getData = (req: Request, res: Response) => {
-  res.json(data);
-};
+class DataController {
+  public getData = (req: Request, res: Response): void => {
+    res.json(data);
+  };
 
-const postData = (req: Request, res: Response) => {
-  const newD = req.body;
-  data.push(newD);
-  res.send(data);
-};
-export { getData, postData };
+  public postData = (req: Request, res: Response): void => {
+    const newD = req.body;
+    data.push(newD);
+
+    res.send(data);
+  };
+}
+
+export default DataController;

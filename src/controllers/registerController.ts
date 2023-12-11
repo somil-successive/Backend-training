@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 
-export const register = (req: Request, res: Response) => {
-  res.json("Registered Successfully");
-};
+class RegisterController {
+  public register = (req: Request, res: Response): void => {
+    res.json("Registered Successfully");
+  };
+}
+export default RegisterController;

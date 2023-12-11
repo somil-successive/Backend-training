@@ -1,39 +1,79 @@
-import express from "express";
-import { authMiddleware } from "../middleware/authMiddleware";
-import { getData, postData } from "../controllers/dataController";
-import { customLogsMiddleware } from "../middleware/customLogsMiddleware";
-import { customHeaderMiddleware } from "../middleware/customHeaderMiddleware";
-import { limitingReqMiddleware } from "../middleware/limitingReqMiddleware";
-import { checkNumParamMiddleware } from "../middleware/checkNumParamMiddleware";
-import { geoLocMiddleware } from "../middleware/geoLocMiddleware";
-import { dynamicValidationMiddleware } from "../middleware/dynamicValidationMiddleware";
-import { login } from "../controllers/loginController";
-import { register } from "../controllers/registerController";
-import { asyncData } from "../controllers/asyncController";
-import { paramValidationMiddleware } from "../middleware/paramValidationMiddleware";
-import { paramController } from "../controllers/paramController";
+import { Router } from "express";
+import DataController from "../controllers/dataController";
+import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware";
+import AsyncController from "../controllers/asyncController";
+import HealthCheckController from "../controllers/healthCheckController";
+import LoginController from "../controllers/loginController";
+import ParamController from "../controllers/paramController";
+import RegisterController from "../controllers/registerController";
+import AuthMiddlewarwe from "../middleware/authMiddleware";
+import CheckNumParamMiddleware from "../middleware/checkNumParamMiddleware";
+import CustomLogsMiddleware from "../middleware/customLogsMiddleware";
+import DynamicValidationMiddleware from "../middleware/dynamicValidationMiddleware";
+import GeoLocationMiddleware from "../middleware/geoLocMiddleware";
+import LimitingReqMiddleware from "../middleware/limitingReqMiddleware";
+import ParamValidationMiddleware from "../middleware/paramValidationMiddleware";
+import ValidationMiddleware from "../middleware/validationMiddleware";
 
-export const dataRouter = express.Router();
+class DataRouter {
+  private router: Router = Router();
+  private async = new AsyncController();
+  private dataController = new DataController();
+  private healthObj = new HealthCheckController();
+  private loginObj = new LoginController();
+  private checkParamObj = new ParamController();
+  private registerObj = new RegisterController();
+  private authMiddlewareObj = new AuthMiddlewarwe();
+  private checkNumParamObj = new CheckNumParamMiddleware();
+  private customLogsObj = new CustomLogsMiddleware();
+  private dynamicValidationObj = new DynamicValidationMiddleware();
+  private geoLocObj = new GeoLocationMiddleware();
+  private limitinReqObj = new LimitingReqMiddleware();
+  private paramValidationObj = new ParamValidationMiddleware();
+  private validationObj: ValidationMiddleware = new ValidationMiddleware();
 
-dataRouter.get(
-  "/get",
-  geoLocMiddleware,
-  limitingReqMiddleware,
-  customHeaderMiddleware({ content: "Text" }),
-  customLogsMiddleware,
-  authMiddleware,
-  checkNumParamMiddleware,
-  getData
-);
-dataRouter.post(
-  "/post",
-  limitingReqMiddleware,
-  customHeaderMiddleware({ content: "Html" }),
-  customLogsMiddleware,
+  private initializeRoutes = (): void => {
+    this.router.get("/health", this.healthObj.healthChecker);
+    this.router.get(
+      "/get",
+      this.geoLocObj.geoLocMiddleware,
+      this.limitinReqObj.limitingReqMiddleware,
+      new CustomHeaderMiddleware({ Cooooontent: "txt" }).customHeaderMiddleware,
+      this.customLogsObj.customLogsMiddleware,
+      this.authMiddlewareObj.authMiddleware,
+      this.checkNumParamObj.checkNumParamMiddleware,
+      this.dataController.getData
+    );
 
-  postData
-);
-dataRouter.post("/login", dynamicValidationMiddleware, login);
-dataRouter.post("/register", dynamicValidationMiddleware, register);
-dataRouter.get("/async", asyncData);
-dataRouter.get("/:id", paramValidationMiddleware, paramController);
+    this.router.post(
+      "/post",
+      this.limitinReqObj.limitingReqMiddleware,
+      new CustomHeaderMiddleware({ Coontent: "html" }).customHeaderMiddleware,
+      this.customLogsObj.customLogsMiddleware,
+      this.authMiddlewareObj.authMiddleware,
+      this.validationObj.validationMiddleware,
+      this.dataController.postData
+    );
+
+    this.router.post("/login", this.loginObj.login);
+    this.router.post(
+      "/register",
+      this.dynamicValidationObj.dynamicValidationMiddleware,
+      this.registerObj.register
+    );
+    this.router.get("/async", this.async.asyncData);
+    this.router.get(
+      "/:id",
+      this.paramValidationObj.paramValidationMiddleware,
+      this.checkParamObj.paramController
+    );
+  };
+  constructor() {
+    this.initializeRoutes();
+  }
+
+  public getRouter = (): Router => {
+    return this.router;
+  };
+}
+export default DataRouter;
