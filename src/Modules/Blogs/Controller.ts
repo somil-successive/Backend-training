@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import Service from "./Service.js";
-import { model } from "mongoose";
 
 class Controller {
   private service = new Service();
@@ -22,5 +21,11 @@ class Controller {
     await this.service.deleteByTitle(title);
     res.json({ message: "Blog has been deleted" });
   };
+  public updateByTitle=async (req:Request,res:Response)=>{
+    const {title}=req.params;
+    const newPost=req.body;
+    await this.service.updateByTitle(title,newPost);
+    res.json({message:"Updated successfully"})
+  }
 }
 export default Controller;

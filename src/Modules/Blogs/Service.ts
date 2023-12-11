@@ -18,5 +18,10 @@ class Service {
   public deleteByTitle = async (title: string) => {
     return await this.repos.deleteByTitle(title);
   };
+  public updateByTitle=async (title:string,newPost:IBlogs)=>{
+    await this.repos.updateByTitle(title,newPost);
+  }
+
+  
 }
 export default Service;

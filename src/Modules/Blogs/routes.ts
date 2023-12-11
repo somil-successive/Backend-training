@@ -8,5 +8,6 @@ bRouter.get("/get", controller.getAll);
 bRouter.post("/create", dynamicValidationMiddleware, controller.create);
 bRouter.get("/getbytitle", controller.getByTitle);
 bRouter.get("/delete/:title", controller.deleteByTitle);
+bRouter.post("/update/:title", controller.updateByTitle);
 
 export default bRouter;
