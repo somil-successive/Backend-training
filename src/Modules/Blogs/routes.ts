@@ -7,7 +7,11 @@ const controller = new Controller();
 bRouter.get("/get", controller.getAll);
 bRouter.post("/create", dynamicValidationMiddleware, controller.create);
 bRouter.get("/getbytitle", controller.getByTitle);
-bRouter.get("/delete/:title", controller.deleteByTitle);
+bRouter.delete("/delete/:title", controller.deleteByTitle);
 bRouter.post("/update/:title", controller.updateByTitle);
+bRouter.get("/getbyid/:id", controller.getById);
+bRouter.get("/getbycategories/:categories", controller.getByCategory);
+bRouter.get("/search/:value", controller.search);
+// bRouter.get("/search", controller.search);
 
 export default bRouter;

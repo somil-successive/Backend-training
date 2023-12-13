@@ -5,10 +5,16 @@ const schema = new mongoose.Schema<IBlogs>(
   {
     title: { type: String },
     body: { type: String },
-    likes: { types: String },
-    imageUrl: { type: Buffer },
-    categories : {type:[String]},
+    imageUrl: { type: String },
+    categories : {type:String},
     isSensitive: { type: Boolean },
+    writer:{
+      id:{type:String},
+      name:{type :String},
+      profileUrl: {type:String},
+      famousWorks:{type:String}
+
+    }
   },
   {
     timestamps: true,

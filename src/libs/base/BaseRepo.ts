@@ -9,7 +9,7 @@ class BaseRepo<T> {
   }
 
   public getAll = async (): Promise<T[]> => {
-    return await this.model.find();
+    return await this.model.find().skip(1).limit(2);
   };
 
   public create = async (data: T): Promise<void> => {

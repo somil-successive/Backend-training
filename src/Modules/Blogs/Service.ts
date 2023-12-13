@@ -12,16 +12,25 @@ class Service {
   public create = async (data: IBlogs) => {
     await this.repos.create(data);
   };
-  public getByName = async (title: string) => {
+  public getByTitle = async (title: string) => {
     return await this.repos.getByTitle(title);
+  };
+  public getById = async (id: string) => {
+    return await this.repos.getById(id);
+  };
+
+  public getByCategory = async (categories: string) => {
+    return await this.repos.getByCategory(categories);
   };
   public deleteByTitle = async (title: string) => {
     return await this.repos.deleteByTitle(title);
   };
-  public updateByTitle=async (title:string,newPost:IBlogs)=>{
-    await this.repos.updateByTitle(title,newPost);
-  }
+  public updateByTitle = async (title: string, newPost: IBlogs) => {
+    await this.repos.updateByTitle(title, newPost);
+  };
 
-  
+  public search = async (value: string) => {
+    return await this.repos.search(value);
+  };
 }
 export default Service;

@@ -4,7 +4,14 @@ export interface IBlogs {
   createdAt: Date;
   lastEdited: Date;
   likes: string;
-  imageUrl: Buffer;
-  categories:Array<String>;
+  imageUrl: String;
+  categories:String;
   isSensitive: boolean;
+  writer:{
+    name:string,
+    profileUrl:string,
+    famousWorks:string
+
+
+  }
 }
