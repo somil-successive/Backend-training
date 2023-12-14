@@ -1,3 +1,3 @@
-export interface IQuery{
-    [key : string] : string
+export interface IQuery {
+  [key: string]: string | number;
 }

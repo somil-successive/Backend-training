@@ -1,5 +1,7 @@
+import { string } from "joi";
 import { IBlogs } from "./entity/IBlogs.js";
 import Repo from "./repositories/Repository.js";
+import { IQuery } from "./entity/IQuery.js";
 
 class Service {
   private repos;
@@ -10,7 +12,7 @@ class Service {
     return await this.repos.getAll();
   };
   public create = async (data: IBlogs) => {
-    await this.repos.create(data);
+    return await this.repos.create(data);
   };
   public getByTitle = async (title: string) => {
     return await this.repos.getByTitle(title);
@@ -26,11 +28,15 @@ class Service {
     return await this.repos.deleteByTitle(title);
   };
   public updateByTitle = async (title: string, newPost: IBlogs) => {
-    await this.repos.updateByTitle(title, newPost);
+    return await this.repos.updateByTitle(title, newPost);
   };
 
   public search = async (value: string) => {
     return await this.repos.search(value);
+  };
+
+  public filter = async (conditionObj:any) => {
+    return await this.repos.filter(conditionObj);
   };
 }
 export default Service;
