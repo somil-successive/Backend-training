@@ -3,6 +3,7 @@ import dynamicValidationMiddleware from "../../middleware/dynamicValidationMiddl
 import Controller from "./Controller.js";
 import authMiddleware from "../../middleware/authMiddleware.js";
 
+
 const router = express.Router();
 
 const userController = new Controller();
@@ -18,5 +19,6 @@ router.get("/getuser/:email", userController.getByEmail);
 router.delete("/delete/:name", userController.deleteByName);
 router.post("/login", authMiddleware, userController.login);
 router.patch("/update/:id", userController.update);
+
 
 export default router;

@@ -1,7 +1,5 @@
-import { string } from "joi";
 import { IBlogs } from "./entity/IBlogs.js";
 import Repo from "./repositories/Repository.js";
-import { IQuery } from "./entity/IQuery.js";
 
 class Service {
   private repos;
@@ -38,5 +36,7 @@ class Service {
   public filter = async (conditionObj:any) => {
     return await this.repos.filter(conditionObj);
   };
+
+
 }
 export default Service;

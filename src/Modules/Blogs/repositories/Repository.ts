@@ -96,5 +96,20 @@ class Repo extends BaseRepo<IBlogs> {
   public filter=async (conditionObj:any)=>{
     return await model.find(conditionObj)
   }
+
+  public upload=async(data:IBlogs[])=>{
+    try {
+      await model.insertMany(data);
+      return null;
+    } catch (err) {
+      if (err instanceof Error) {
+        return err;
+      } else {
+        return null;
+      }
+    }
+  }
+
+
 }
 export default Repo;

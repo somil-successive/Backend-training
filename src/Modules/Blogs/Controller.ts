@@ -8,9 +8,9 @@ class Controller {
   public getAll = async (req: Request, res: Response): Promise<void> => {
     const data = await this.service.getAll();
     if (data) {
-      // res.json(data);
+    
       res.send(
-        new SystemResponse(200, "Data fetched Successfully", data).success()
+        new SystemResponse(res,200, "Data fetched Successfully", data).success()
       );
     } else {
       res.status(502).json({ error: "No Data Found " });
@@ -20,9 +20,8 @@ class Controller {
     const data = req.body;
     const msg = await this.service.create(data);
     if (!msg) {
-      // res.json({ message: "Blog Created Successfully" });
       res.send(
-        new SystemResponse(200, "Blog Created Successfully", {}).success()
+        new SystemResponse(res,200, "Blog Created Successfully", {}).success()
       );
     } else {
       res.status(406).json({ error: msg });
@@ -34,7 +33,7 @@ class Controller {
     if (data) {
       // res.json(data);
       res.send(
-        new SystemResponse(200, "Blogs fetched Successfully", data).success()
+        new SystemResponse(res,200, "Blogs fetched Successfully", data).success()
       );
     } else {
       res.status(502).json({ error: "No Data Found " });
@@ -46,7 +45,7 @@ class Controller {
     if (data) {
       // res.json(data);
       res.send(
-        new SystemResponse(200, "Blogs fetched Successfully", data).success()
+        new SystemResponse(res,200, "Blogs fetched Successfully", data).success()
       );
     } else {
       res.status(502).json({ error: "No Data Found " });
@@ -67,7 +66,7 @@ class Controller {
     if (!msg) {
       // res.json({ message: "Blog has been deleted" });
       res.send(
-        new SystemResponse(200, "Blog Deleted Successfully", {}).success()
+        new SystemResponse(res,200, "Blog Deleted Successfully", {}).success()
       );
     } else {
       res.status(406).json({ error: msg });
@@ -79,7 +78,7 @@ class Controller {
     const msg = await this.service.updateByTitle(title, newPost);
     if (msg === null) {
       // res.json({ message: "Updated successfully" });
-      res.send(new SystemResponse(200, "Updated Successfully", {}).success());
+      res.send(new SystemResponse(res,200, "Updated Successfully", {}).success());
     } else {
       res.status(406).json({ error: msg });
     }
@@ -90,7 +89,7 @@ class Controller {
     if (data.length !== 0) {
       // res.json(data);
       res.send(
-        new SystemResponse(200, "Blogs fetched Successfully", data).success()
+        new SystemResponse(res,200, "Blogs fetched Successfully", data).success()
       );
     } else {
       res.status(406).json({ error: "Invalid Search Query" });
@@ -108,7 +107,7 @@ class Controller {
     const data = await this.service.filter(conditionObj);
     // res.json(data);
     res.send(
-      new SystemResponse(200, "Blogs fetched Successfully", data).success()
+      new SystemResponse(res,200, "Blogs fetched Successfully", data).success()
     );
   };
 }

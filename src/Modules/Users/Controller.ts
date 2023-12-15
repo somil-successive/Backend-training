@@ -50,5 +50,7 @@ class Controller {
     await this.userService.update(id, newData);
     res.json({ message: "Data has been updated successfully!" });
   };
+
+  
 }
 export default Controller;
