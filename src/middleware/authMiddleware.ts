@@ -13,8 +13,6 @@ class AuthMiddlewarwe {
     try {
       //eslint-disable-next-line
       const token: any = req.headers.authorization;
-      const user = req.body;
-
       console.log(token);
       if (!token) {
         next(createHttpError(403, "Unauthorized - Token not provided."));
