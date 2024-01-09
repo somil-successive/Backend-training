@@ -9,7 +9,7 @@ export interface IBlogs {
   imageUrl: string;
   categories: string;
   isSensitive: boolean;
-  tags: Array<string>;
+  tags:string;
 
   writer: {
     id: number;

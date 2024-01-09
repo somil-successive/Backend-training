@@ -9,6 +9,7 @@ class ParamValidationMiddleware {
     const { id } = req.query;
     if (!Number(id)) {
       return next(createError(406, "Not Valid Params"));
+     
     }
     next();
   };

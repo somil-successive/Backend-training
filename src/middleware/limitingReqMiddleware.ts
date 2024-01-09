@@ -21,7 +21,6 @@ class LimitingReqMiddleware {
       count++;
       next();
     } else if (time > time1 + 5) {
-      count = 0;
       next();
     } else {
       res.status(429).send("Limit Exceeds");

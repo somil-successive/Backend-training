@@ -1,5 +1,5 @@
-import { IUser } from "./entity/IUser.js";
-import Repo from "./repositories/Repository.js";
+import { IUser } from "./entity/IUser";
+import Repo from "./repositories/Repository";
 import bcrypt from "bcrypt";
 
 class Service {
@@ -14,8 +14,8 @@ class Service {
     await this.repo.create(user);
   };
 
-  public getAllUSers = async () => {
-    return await this.repo.getAll();
+   public getAllUSers = async (skip:number,limit:number) => {
+ return await this.repo.getAll(skip,limit);
   };
 
   public getByName = async (name: string) => {

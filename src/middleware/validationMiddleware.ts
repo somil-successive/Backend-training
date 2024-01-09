@@ -1,4 +1,4 @@
-import { userSchema1 } from "../utils/userSchema.js";
+import { userSchema1 } from "../utils/userSchema";
 import { Request, Response, NextFunction } from "express";
 
 class ValidationMiddleware {

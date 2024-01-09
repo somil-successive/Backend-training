@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { configurations } from "../utils/config.js";
+import { configurations } from "../utils/config";
 
 class Connection {
   public connectDB = async (): Promise<void> => {
@@ -9,6 +9,15 @@ class Connection {
       console.log("MongoDB is connected successfully.");
     } catch (err) {
       console.error("MongoDB connection error" + err);
+    }
+  };
+
+  public disconnectDB = async (): Promise<void> => {
+    try {
+      await mongoose.disconnect();
+
+    } catch (err) {
+      console.error("MongoDB disconnect error" + err);
     }
   };
 }

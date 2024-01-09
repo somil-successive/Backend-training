@@ -1,8 +1,8 @@
-import { userSchema1, userSchema2 } from "../utils/userSchema.js";
+import { userSchema1, userSchema2 } from "../utils/userSchema";
 import { Request, Response, NextFunction } from "express";
 import Joi from "joi";
-import schema from "../Modules/Users/validation.js";
-import { blogShema } from "../Modules/Blogs/validation.js";
+import schema from "../Modules/Users/validation";
+import { blogShema } from "../Modules/Blogs/validation";
 
 class DynamicValidationMiddleware {
   public dynamicValidationMiddleware = (

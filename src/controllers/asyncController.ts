@@ -11,6 +11,7 @@ class AsyncController {
     try {
       const response = await myPromise;
       console.log(response);
+      res.send(response);
     } catch (err) {
       res.status(400).json({ error: err });
     }

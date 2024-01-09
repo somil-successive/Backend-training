@@ -1,85 +1,43 @@
-import { model } from "./Schema.js";
-import { IBlogs } from "../entity/IBlogs.js";
-import BaseRepo from "../../../libs/base/BaseRepo.js";
-import { IQuery } from "../entity/IQuery.js";
+import { model } from "./Schema";
+import { IBlogs } from "../entity/IBlogs";
+import BaseRepo from "../../../libs/base/BaseRepo";
+import BulkUpload from "./BulkUploadModel";
+import IBulkUpload from "../entity/IBulkUpload";
+import BulkErrorDetail from "./BulkErrorModel";
+import IBulkError from "../entity/IBulkErrors";
+
 
 class Repo extends BaseRepo<IBlogs> {
   constructor() {
     super(model);
   }
 
-  public getByTitle = async (title: string): Promise<IBlogs | Error | null> => {
-    try {
-      return await model.findOne({ title });
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
-  };
-
   public getById = async (id: string): Promise<IBlogs | Error | null> => {
-    try {
-      return await model.findById(id);
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
+    return await model.findById(id);
   };
 
   public getByCategory = async (
-    categories: string
-  ): Promise<IBlogs | Error | null> => {
-    try {
-      return await model.findOne({ categories });
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
+    categories: string,
+    skip: number,
+    limit: number
+  ): Promise<IBlogs[]> => {
+    return await model
+      .find({ categories: { $in: categories } })
+      .skip(skip)
+      .limit(limit);
   };
 
   public updateByTitle = async (
     title: string,
     newPost: IBlogs
   ): Promise<Error | null> => {
-    try {
-      await model.findOneAndUpdate({ title }, newPost, { runValidators: true });
-      return null;
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
+    await model.findOneAndUpdate({ title }, newPost, { runValidators: true });
+    return null;
   };
 
-  public deleteByTitle = async (
-    title: string
-  ): Promise<IBlogs | Error | null> => {
-    try {
-      await model.findOneAndDelete({ title });
-      return null;
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
-  };
-
-  public search = async (value: string) => {
-    try {
-      return await model.find({
+  public search = async (skip: number, limit: number, value: string) => {
+    return await model
+      .find({
         $or: [
           { title: { $regex: value, $options: "i" } },
           { categories: { $regex: value, $options: "i" } },
@@ -87,29 +45,28 @@ class Repo extends BaseRepo<IBlogs> {
           { "writer.id": { $regex: value, $options: "i" } },
           { tags: { $regex: value, $options: "i" } },
         ],
-      });
-    } catch (err) {
-      return "Invalid Search";
-    }
+      })
+      .skip(skip)
+      .limit(limit);
   };
 
-  public filter=async (conditionObj:any)=>{
-    return await model.find(conditionObj)
-  }
 
-  public upload=async(data:IBlogs[])=>{
-    try {
-      await model.insertMany(data);
-      return null;
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
-  }
+  // public filter = async (conditionObj: any) => {
+  //   return await model.find(conditionObj);
+  // };
 
+  public getAllBulkUploads = async (
+    skip: number,
+    limit: number
+  ): Promise<IBulkUpload[] | Error | null> => {
+    return await BulkUpload.find().skip(skip).limit(limit);
+  };
 
+  public getAllErrorDetails = async (
+    skip: number,
+    limit: number
+  ): Promise<IBulkError[] | Error | null> => {
+    return await BulkErrorDetail.find().skip(skip).limit(limit);
+  };
 }
 export default Repo;

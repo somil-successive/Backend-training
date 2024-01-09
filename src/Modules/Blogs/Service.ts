@@ -1,42 +1,55 @@
-import { IBlogs } from "./entity/IBlogs.js";
-import Repo from "./repositories/Repository.js";
+import { IBlogs } from "./entity/IBlogs";
+import Repo from "./repositories/Repository";
 
 class Service {
   private repos;
   constructor() {
     this.repos = new Repo();
   }
-  public getAll = async () => {
-    return await this.repos.getAll();
+  public getAll = async (skip: number, limit: number) => {
+    return await this.repos.getAll(skip, limit);
   };
   public create = async (data: IBlogs) => {
     return await this.repos.create(data);
-  };
-  public getByTitle = async (title: string) => {
-    return await this.repos.getByTitle(title);
   };
   public getById = async (id: string) => {
     return await this.repos.getById(id);
   };
 
-  public getByCategory = async (categories: string) => {
-    return await this.repos.getByCategory(categories);
-  };
-  public deleteByTitle = async (title: string) => {
-    return await this.repos.deleteByTitle(title);
+  public getByCategory = async (
+    skip: number,
+    limit: number,
+    categories: string
+  ) => {
+    return await this.repos.getByCategory(categories, skip, limit);
   };
   public updateByTitle = async (title: string, newPost: IBlogs) => {
     return await this.repos.updateByTitle(title, newPost);
   };
 
-  public search = async (value: string) => {
-    return await this.repos.search(value);
+  public search = async (skip: number, limit: number, value: string) => {
+    return await this.repos.search(skip, limit, value);
   };
 
-  public filter = async (conditionObj:any) => {
-    return await this.repos.filter(conditionObj);
+  
+
+  // public filter = async (conditionObj: any) => {
+  //   return await this.repos.filter(conditionObj);
+  // };
+
+  public delete = async (id: string) => {
+    return await this.repos.delete(id);
+  };
+  public update = async (id: string, newPost: IBlogs) => {
+    return await this.repos.update(id, newPost);
   };
 
+  public getAllBulkUploads = async (skip: number, limit: number) => {
+    return await this.repos.getAllBulkUploads(skip, limit);
+  };
 
+  public getAllErrorDetails = async (skip: number, limit: number) => {
+    return await this.repos.getAllErrorDetails(skip, limit);
+  };
 }
 export default Service;

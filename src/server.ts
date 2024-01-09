@@ -1,4 +1,4 @@
-import app from "./app.js";
-import { configurations } from "./utils/config.js";
+import app from "./app";
+import { configurations } from "./utils/config";
 
 app.startServer(configurations.port);

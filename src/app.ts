@@ -1,21 +1,22 @@
-import express, { Application, NextFunction } from "express";
-import fs from "fs";
-import createError from "http-errors";
-import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware.js";
-import { Request, Response } from "express";
-import DataRouter from "./routes/dataRoutes.js";
-import Connection from "./libs/databaseConnection.js";
-import router from "./Modules/Users/routes.js";
-import bRouter from "./Modules/Blogs/routes.js";
+import express, { Application } from "express";
+import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware";
+import DataRouter from "./routes/dataRoutes";
+import Connection from "./libs/databaseConnection";
+import router from "./Modules/Users/routes";
+import swaggerUi from "swagger-ui-express";
+import bRouter from "./Modules/Blogs/routes";
+import cors from "cors";
+import swaggerSpec from "./swaggerConfig";
 
 class App {
   private app: Application = express();
-  private connection;
+  public connection;
 
   private setRoutes = (): void => {
     const dataRouter: DataRouter = new DataRouter();
     this.app.use("/data", dataRouter.getRouter());
     this.app.use("/user", router);
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     this.app.use("/blogs", bRouter);
   };
 
@@ -23,9 +24,16 @@ class App {
     this.app.use(errorHandlingMiddleware);
   };
 
+  public getApp = (): Application => {
+    return this.app;
+  };
+  
+
   constructor() {
     this.connection = new Connection();
+    this.app.use(cors());
     this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
     this.setRoutes();
     this.setErrorHandler();
   }

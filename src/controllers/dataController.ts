@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import data from "../utils/mockData.js";
+import data from "../utils/mockData";
 
 class DataController {
   public getData = (req: Request, res: Response): void => {
+    
     res.json(data);
   };
 

@@ -1,13 +1,27 @@
-import Joi, { string } from "joi";
+import Joi from "joi";
 
 export const blogShema = Joi.object({
-  title: Joi.string().min(3).max(30).required(),
-  body: Joi.object(),
+  title: Joi.string().required(),
+  body: Joi.object({
+    description: Joi.string().required(),
+    links: Joi.string(),
+  }),
+
+  imageUrl: Joi.string(),
+  categories: Joi.string()
+    .valid("travel", "study", "fitness", "lifestyle", "sports")
+    .default("sports")
+    .lowercase(),
   likes: Joi.number(),
-  categories: Joi.string().required(),
-  imageUrl: Joi.string().required(),
-  isSensitive: Joi.boolean().required(),
-  tags: Joi.array(),
-  writer: Joi.object().required(),
-  approved:Joi.boolean().required()
+  approved: Joi.boolean().required(),
+  isSensitive: Joi.boolean().default(false).required(),
+  tags: Joi.string(),
+
+  writer: Joi.object({
+    id: Joi.string(),
+    name: Joi.string(),
+    email: Joi.string(),
+    profilePicUrl: Joi.string(),
+    famousWorks: Joi.string(),
+  }),
 });

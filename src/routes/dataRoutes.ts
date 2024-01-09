@@ -1,34 +1,20 @@
-import authMiddleware from "../middleware/authMiddleware.js";
-import DataController from "../controllers/dataController.js";
-import customLogsMiddleware from "../middleware/customLogsMiddleware.js";
-import limitingReqMiddleware from "../middleware/limitingReqMiddleware.js";
-import checkNumParamMiddleware from "../middleware/checkNumParamMiddleware.js";
-import geoLocMiddleware from "../middleware/geoLocMiddleware.js";
-import dynamicValidationMiddleware from "../middleware/dynamicValidationMiddleware.js";
-import loginController from "../controllers/loginController.js";
-import registerController from "../controllers/registerController.js";
-import paramValidationMiddleware from "../middleware/paramValidationMiddleware.js";
-import asyncController from "../controllers/asyncController.js";
-import validationMiddleware from "../middleware/validationMiddleware.js";
-import healthCheckController from "../controllers/healthCheckController.js";
-import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware.js";
+import DataController from "../controllers/dataController";
+import customLogsMiddleware from "../middleware/customLogsMiddleware";
+import limitingReqMiddleware from "../middleware/limitingReqMiddleware";
+import dynamicValidationMiddleware from "../middleware/dynamicValidationMiddleware";
+import loginController from "../controllers/loginController";
+import registerController from "../controllers/registerController";
+import asyncController from "../controllers/asyncController";
+import validationMiddleware from "../middleware/validationMiddleware";
+import healthCheckController from "../controllers/healthCheckController";
+import CustomHeaderMiddleware from "../middleware/customHeaderMiddleware";
 import { Router } from "express";
 
 class DataRouter {
   private router: Router = Router();
 
   private initializeRoutes = (): void => {
-    this.router.get(
-      "/get",
-      paramValidationMiddleware,
-      geoLocMiddleware,
-      limitingReqMiddleware,
-      new CustomHeaderMiddleware({ Cooooontent: "txt" }).customHeaderMiddleware,
-      customLogsMiddleware,
-      authMiddleware,
-      checkNumParamMiddleware,
-      new DataController().getData
-    );
+    this.router.get("/get", new DataController().getData);
 
     this.router.post(
       "/post",

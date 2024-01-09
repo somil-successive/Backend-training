@@ -1,5 +1,4 @@
-import { Error, Model } from "mongoose";
-import { UpdateQuery } from "mongoose";
+import { Error, Model, UpdateQuery } from "mongoose";
 
 class BaseRepo<T> {
   private model: Model<T>;
@@ -8,45 +7,29 @@ class BaseRepo<T> {
     this.model = model;
   }
 
-  public getAll = async (): Promise<T[] | Error | null> => {
-    try {
-      return await this.model.find().skip(1).limit(2);
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
+  public getAll = async (
+    skip: number,
+    limit: number
+  ): Promise<T[] | Error | null> => {
+    return await this.model.find().skip(skip).limit(limit);
   };
 
-  public create = async (data: T): Promise<Error | null> => {
-    try {
-      await this.model.insertMany(data);
-      return null;
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
+  public create = async (data: T): Promise<T[] | null> => {
+       await this.model.insertMany(data);
+    return null;
+  };
+
+  public delete = async (id: string): Promise<Error | null> => {
+    await this.model.findByIdAndDelete(id);
+    return null;
   };
 
   public update = async (
     id: string,
     newData: UpdateQuery<T>
   ): Promise<null | Error> => {
-    try {
-      await this.model.findByIdAndUpdate(id, newData);
-      return null;
-    } catch (err) {
-      if (err instanceof Error) {
-        return err;
-      } else {
-        return null;
-      }
-    }
+    await this.model.findByIdAndUpdate(id, newData, { runValidators: true });
+    return null;
   };
 }
 export default BaseRepo;

@@ -1,6 +1,6 @@
-import BaseRepo from "../../../libs/base/BaseRepo.js";
-import { IUser } from "../entity/IUser.js";
-import User from "./Schema.js";
+import BaseRepo from "../../../libs/base/BaseRepo";
+import { IUser } from "../entity/IUser";
+import User from "./Schema";
 
 class Repo extends BaseRepo<IUser> {
   constructor() {
