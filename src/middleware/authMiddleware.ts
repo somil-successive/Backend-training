@@ -2,9 +2,10 @@ import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { configurations } from "../utils/config";
 import createHttpError from "http-errors";
-
+import Repo from "../Modules/Users/repositories/Repository";
 
 class AuthMiddlewarwe {
+  private repo = new Repo();
   public authMiddleware = async (
     req: Request,
     res: Response,
@@ -13,20 +14,21 @@ class AuthMiddlewarwe {
     try {
       //eslint-disable-next-line
       const token: any = req.headers.authorization;
-      console.log(token);
+
       if (!token) {
         next(createHttpError(403, "Unauthorized - Token not provided."));
       } else {
-        jwt.verify(token ?? "", configurations.secretKey) ;
-        // const user = await User.findOne({ email: decoded.user.email });
-        // if (!user) {
-        //   res.status(404).send("User Not Found");
-        // }
+        const decodedUser = jwt.verify(token ?? "", configurations.secretKey);
+        //eslint-disable-next-line
+        const { email }: any = decodedUser;
+        const user = await this.repo.getByEmail(email);
+        if (!user) {
+          next(createHttpError(401, "Unauthorized-User Not Exist"));
+        }
 
         next();
       }
     } catch (error) {
-      console.log(">.........................");
       next(createHttpError(401, "Unauthorized -Invalid token"));
     }
   };

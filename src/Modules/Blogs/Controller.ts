@@ -76,7 +76,7 @@ class Controller {
           res,
           406,
           "Blogs Not Found",
-          "No Data Found"
+          "No Blog Found"
         ).failure()
       );
     }
@@ -164,15 +164,19 @@ class Controller {
   };
 
   public update = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const newPost = req.body;
-    const msg = await this.service.update(id, newPost);
-    if (msg === null) {
-      res.send(
-        new SystemResponse(res, 200, "Updated Successfully", {}).success()
-      );
-    } else {
-      res.status(406).json({ error: msg });
+    try {
+      const { id } = req.params;
+      const newPost = req.body;
+      const msg = await this.service.update(id, newPost);
+      if (msg === null) {
+        res.send(
+          new SystemResponse(res, 200, "Updated Successfully", {}).success()
+        );
+      } else {
+        throw new Error("Invalid id");
+      }
+    } catch (err) {
+      res.status(406).send(err);
     }
   };
 
@@ -182,7 +186,7 @@ class Controller {
 
       const session_id: string = uuidv4();
       const startTime = Date.now();
-      const batchSize = 1000;
+      const batchSize = 10000;
       let recordsProcessCount = 0;
       let errorCount = 0;
       //eslint-disable-next-line
@@ -190,7 +194,7 @@ class Controller {
       //eslint-disable-next-line
       let bulkUploadErrors: any[] = [];
       //eslint-disable-next-line
-      const transformRowData=(obj: any) =>{
+      const transformRowData = (obj: any) => {
         const result = {};
 
         for (const key in obj) {
@@ -207,7 +211,7 @@ class Controller {
         }
 
         return result;
-      }
+      };
 
       if (!csvFile) {
         return res.send("No file selected");
@@ -311,12 +315,9 @@ class Controller {
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-    const { page, limit } = req.query;
-    const pageNumber: number = page ? parseInt(String(page), 10) || 1 : 1;
-    const limitNumber: number = limit ? parseInt(String(limit), 10) : 10;
-    const skip: number = (pageNumber - 1) * limitNumber;
     try {
-      const data = await this.service.getAllBulkUploads(skip, limitNumber);
+      const data = await this.service.getAllBulkUploads();
+
       if (data) {
         res.send(
           new SystemResponse(
@@ -339,12 +340,18 @@ class Controller {
     res: Response
   ): Promise<void> => {
     const { page, limit } = req.query;
+    const { sessionId } = req.params;
     const pageNumber: number = page ? parseInt(String(page), 10) || 1 : 1;
     const limitNumber: number = limit ? parseInt(String(limit), 10) : 10;
     const skip: number = (pageNumber - 1) * limitNumber;
     try {
-      const data = await this.service.getAllErrorDetails(skip, limitNumber);
-      if (data) {
+      const data = await this.service.getAllErrorDetails(
+        skip,
+        limitNumber,
+        sessionId
+      );
+
+      if (data.length > 0) {
         res.send(
           new SystemResponse(
             res,
@@ -354,10 +361,12 @@ class Controller {
           ).success()
         );
       } else {
-        throw new Error("No Data Found");
+        res.send(
+          new SystemResponse(res, 404, "Data not found", data).success()
+        );
       }
     } catch (err) {
-      res.status(502).json({ error: err });
+      res.status(404).json({ error: err });
     }
   };
 

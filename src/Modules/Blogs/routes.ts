@@ -1,7 +1,7 @@
 import express from "express";
 import Controller from "./Controller";
 import multer from "multer";
-
+import authMiddleware from "../../middleware/authMiddleware";
 const bRouter = express.Router();
 const controller = new Controller();
 
@@ -17,9 +17,9 @@ const controller = new Controller();
  *          description: A list of blogs
  */
 
-bRouter.get("/get",controller.getAll);
+bRouter.get("/get", controller.getAll);
 
-bRouter.post("/create", controller.create);
+bRouter.post("/create", authMiddleware, controller.create);
 
 /**
  * @swagger
@@ -156,7 +156,7 @@ bRouter.get("/search/:value", controller.search);
  *       '500':
  *         description: Internal server error.
  */
-bRouter.delete("/:id", controller.delete);
+bRouter.delete("/:id", authMiddleware, controller.delete);
 
 /**
  * @swagger
@@ -190,11 +190,16 @@ bRouter.delete("/:id", controller.delete);
  *         description: Internal server error.
  */
 
-bRouter.patch("/updatebyid/:id", controller.update);
+bRouter.patch("/updatebyid/:id", authMiddleware, controller.update);
 
 const upload = multer({ dest: "uploads/" });
 
-bRouter.post("/bulk-upload", upload.single("file"), controller.bulkUpload);
+bRouter.post(
+  "/bulk-upload",
+  authMiddleware,
+  upload.single("file"),
+  controller.bulkUpload
+);
 
 /**
  * @swagger

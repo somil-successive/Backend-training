@@ -44,12 +44,12 @@ class Service {
     return await this.repos.update(id, newPost);
   };
 
-  public getAllBulkUploads = async (skip: number, limit: number) => {
-    return await this.repos.getAllBulkUploads(skip, limit);
+  public getAllBulkUploads = async () => {
+    return await this.repos.getAllBulkUploads();
   };
 
-  public getAllErrorDetails = async (skip: number, limit: number) => {
-    return await this.repos.getAllErrorDetails(skip, limit);
+  public getAllErrorDetails = async (skip: number, limit: number,sessionId:string) => {
+    return await this.repos.getAllErrorDetails(skip, limit,sessionId);
   };
 }
 export default Service;

@@ -6,7 +6,6 @@ import IBulkUpload from "../entity/IBulkUpload";
 import BulkErrorDetail from "./BulkErrorModel";
 import IBulkError from "../entity/IBulkErrors";
 
-
 class Repo extends BaseRepo<IBlogs> {
   constructor() {
     super(model);
@@ -50,23 +49,24 @@ class Repo extends BaseRepo<IBlogs> {
       .limit(limit);
   };
 
-
   // public filter = async (conditionObj: any) => {
   //   return await model.find(conditionObj);
   // };
 
-  public getAllBulkUploads = async (
-    skip: number,
-    limit: number
-  ): Promise<IBulkUpload[] | Error | null> => {
-    return await BulkUpload.find().skip(skip).limit(limit);
+  public getAllBulkUploads = async (): Promise<
+    IBulkUpload[] | Error | null
+  > => {
+    return await BulkUpload.find();
   };
 
   public getAllErrorDetails = async (
     skip: number,
-    limit: number
-  ): Promise<IBulkError[] | Error | null> => {
-    return await BulkErrorDetail.find().skip(skip).limit(limit);
+    limit: number,
+    sessionId: string
+  ): Promise<IBulkError[]> => {
+    return await BulkErrorDetail.find({ session_id: sessionId })
+      .skip(skip)
+      .limit(limit);
   };
 }
 export default Repo;

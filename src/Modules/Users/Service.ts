@@ -10,7 +10,7 @@ class Service {
   }
 
   public createUser = async (user: IUser) => {
-    user.password = await bcrypt.hash("password", 12);
+    user.password = await bcrypt.hash(user.password, 12);
     await this.repo.create(user);
   };
 

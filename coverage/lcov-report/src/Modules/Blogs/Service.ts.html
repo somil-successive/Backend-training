@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">81.81% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>34/36</span>
+                <span class='fraction'>27/33</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">91.3% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>21/23</span>
+                <span class='fraction'>15/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.15% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>25/26</span>
+                <span class='fraction'>21/24</span>
             </div>
         
             
@@ -116,7 +116,9 @@
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -128,7 +130,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -147,17 +149,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -180,8 +184,8 @@ class Service {
   public getAll = async (skip: number, limit: number) =&gt; {
     return await this.repos.getAll(skip, limit);
   };
-  public create = async (data: IBlogs) =&gt; {
-    return await this.repos.create(data);
+  public create = <span class="fstat-no" title="function not covered" >async (d</span>ata: IBlogs) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >    return await this.repos.create(data);</span>
   };
   public getById = async (id: string) =&gt; {
     return await this.repos.getById(id);
@@ -202,23 +206,25 @@ class Service {
     return await this.repos.search(skip, limit, value);
   };
 &nbsp;
-  public filter = <span class="fstat-no" title="function not covered" >async (c</span>onditionObj: any) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
-<span class="cstat-no" title="statement not covered" >    return await this.repos.filter(conditionObj);</span>
+  
+&nbsp;
+  // public filter = async (conditionObj: any) =&gt; {
+  //   return await this.repos.filter(conditionObj);
+  // };
+&nbsp;
+  public delete = <span class="fstat-no" title="function not covered" >async (i</span>d: string) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >    return await this.repos.delete(id);</span>
+  };
+  public update = <span class="fstat-no" title="function not covered" >async (i</span>d: string, newPost: IBlogs) =&gt;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >    return await this.repos.update(id, newPost);</span>
   };
 &nbsp;
-  public delete = async (id: string) =&gt; {
-    return await this.repos.delete(id);
-  };
-  public update = async (id: string, newPost: IBlogs) =&gt; {
-    return await this.repos.update(id, newPost);
+  public getAllBulkUploads = async () =&gt; {
+    return await this.repos.getAllBulkUploads();
   };
 &nbsp;
-  public getAllBulkUploads = async (skip: number, limit: number) =&gt; {
-    return await this.repos.getAllBulkUploads(skip, limit);
-  };
-&nbsp;
-  public getAllErrorDetails = async (skip: number, limit: number) =&gt; {
-    return await this.repos.getAllErrorDetails(skip, limit);
+  public getAllErrorDetails = async (skip: number, limit: number,sessionId:string) =&gt; {
+    return await this.repos.getAllErrorDetails(skip, limit,sessionId);
   };
 }
 export default Service;
@@ -229,7 +235,7 @@ export default Service;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-01-08T12:45:07.530Z
+                at 2024-01-24T07:12:15.149Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
