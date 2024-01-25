@@ -11,11 +11,15 @@ class BaseRepo<T> {
     skip: number,
     limit: number
   ): Promise<T[] | Error | null> => {
-    return await this.model.find().skip(skip).limit(limit);
+    return await this.model
+      .find()
+      .select(["title", "imageUrl", "categories", "body.description"])
+      .skip(skip)
+      .limit(limit);
   };
 
   public create = async (data: T): Promise<T[] | null> => {
-       await this.model.insertMany(data);
+    await this.model.insertMany(data);
     return null;
   };
 
