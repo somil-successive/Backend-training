@@ -1,6 +1,8 @@
 import express from "express";
 import Controller from "./Controller";
-
+import paramValidationMiddleware from "../../middleware/paramValidationMiddleware";
+import dynamicValidationMiddleware from "../../middleware/dynamicValidationMiddleware";
+import StringParamValidationMiddleware from "../../middleware/checkStringParams";
 
 const router = express.Router();
 
@@ -20,13 +22,46 @@ const userController = new Controller();
 
 router.get("/getusers", userController.getAllUsers);
 
+/**
+ * @swagger
+ * /user/register:
+ *     post:
+ *       tags:
+ *         - "Create a user"
+ *       summary: Create a new user
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 name:
+ *                   type: string
+ *                   description: The name of the user
+ *                 email:
+ *                   type: string
+ *                   description: The email of the user
+ *                 password:
+ *                   type: string
+ *                 phone:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ *       responses:
+ *         '201':
+ *           description: User created successfully
+ *         '406':
+ *           description: Error occured
+ *         '500':
+ *           description: Internal Server Error`
+ */
 
 router.post(
   "/register",
-  // dynamicValidationMiddleware,
+  dynamicValidationMiddleware,
   userController.createUser
 );
-
 
 /**
  * @swagger
@@ -52,9 +87,11 @@ router.post(
  *       '500':
  *         description: Internal server error.
  */
-router.get("/get/:name", userController.getByName);
-
-
+router.get(
+  "/get/:name",
+  StringParamValidationMiddleware.checkStringParams("name"),
+  userController.getByName
+);
 
 /**
  * @swagger
@@ -82,8 +119,6 @@ router.get("/get/:name", userController.getByName);
  */
 router.get("/getuser/:email", userController.getByEmail);
 
-
-
 /**
  * @swagger
  * /user/delete/{name}:
@@ -108,8 +143,41 @@ router.get("/getuser/:email", userController.getByEmail);
  *       '500':
  *         description: Internal server error.
  */
-router.delete("/delete/:name", userController.deleteByName);
-router.post("/login", userController.login);
+router.delete(
+  "/delete/:name",
+  StringParamValidationMiddleware.checkStringParams("name"),
+  userController.deleteByName
+);
+
+/**
+ * @swagger
+ * /user/login:
+ *     post:
+ *       tags:
+ *         - "Login a user"
+ *       summary: Login a  user
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 email:
+ *                   type: string
+ *                   description: The email of the user
+ *                 password:
+ *                   type: string
+ *       responses:
+ *         '201':
+ *           description: User login successfully
+ *         '406':
+ *           description: Error occured
+ *         '500':
+ *           description: Internal Server Error`
+ */
+
+router.post("/login", dynamicValidationMiddleware, userController.login);
 
 /**
  * @swagger
@@ -142,6 +210,6 @@ router.post("/login", userController.login);
  *       '500':
  *         description: Internal server error.
  */
-router.patch("/update/:id", userController.update);
+router.patch("/update/:id", paramValidationMiddleware, userController.update);
 
 export default router;

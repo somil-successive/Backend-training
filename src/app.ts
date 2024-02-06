@@ -2,9 +2,9 @@ import express, { Application } from "express";
 import errorHandlingMiddleware from "./middleware/errorHandlingMiddleware";
 import DataRouter from "./routes/dataRoutes";
 import Connection from "./libs/databaseConnection";
-import router from "./Modules/Users/routes";
+import router from "./modules/users/routes";
 import swaggerUi from "swagger-ui-express";
-import bRouter from "./Modules/Blogs/routes";
+import bRouter from "./modules/blogs/routes";
 import cors from "cors";
 import swaggerSpec from "./swaggerConfig";
 

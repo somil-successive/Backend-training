@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { HttpError } from "http-errors";
 
 class ErrorHandlingMiddleware {
-  public errorHandlingMiddleware = (
-    err: HttpError,
+        //eslint-disable-next-line
+  public errorHandlingMiddleware = (err: any,
     req: Request,
-    res: Response
-  ): void => {
-    res.status(err.status).json({ error: err.message });
+    res: Response,
+  )=> {
+    return res.status(err?.status || 500).json({ error: err.message });
   };
+
 }
 export default new ErrorHandlingMiddleware().errorHandlingMiddleware;

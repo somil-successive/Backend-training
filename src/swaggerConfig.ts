@@ -1,4 +1,4 @@
-import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerJsdoc from "swagger-jsdoc";
 
 //eslint-disable-next-line
 const options: any = {
@@ -15,10 +15,23 @@ const options: any = {
         description: "Development server",
       },
     ],
+    components: {
+      securitySchemes: {
+        ApiKeyAuth: {
+          type: "apiKey",
+          in: "header",
+          name: "Authorization",
+        },
+      },
+    },
+    security: [
+      {
+        ApiKeyAuth: [],
+      },
+    ],
   },
-  apis: ["src/**/*.ts"], // Path to the file with your API documentation
+  apis: ["src/**/*.ts"],
 };
-
 //eslint-disable-next-line
 const swaggerSpec: any = swaggerJsdoc(options);
 

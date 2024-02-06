@@ -2,8 +2,10 @@ import express from "express";
 import Controller from "./Controller";
 import multer from "multer";
 import authMiddleware from "../../middleware/authMiddleware";
+import paramValidationMiddleware from "../../middleware/paramValidationMiddleware";
 const bRouter = express.Router();
 const controller = new Controller();
+import StringParamValidationMiddleware from "../../middleware/checkStringParams";
 
 /**
  * @swagger
@@ -19,6 +21,50 @@ const controller = new Controller();
 
 bRouter.get("/get", controller.getAll);
 
+/**
+ * @swagger
+ * /blogs/create:
+ *     post:
+ *       tags:
+ *         - "Create a blog"
+ *       summary: Create a new blog
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 title:
+ *                   type: string
+ *                   description: The title of the blog
+ *                 categories:
+ *                   type: string
+ *                   enum:
+ *                     - travel
+ *                     - study
+ *                     - fitness
+ *                     - lifestyle
+ *                     - sports
+ *                   description: The category of the blog
+ *                 body:
+ *                   type: object
+ *                   properties:
+ *                     description:
+ *                       type: string
+ *                       description: The description of the blog
+ *                 approved:
+ *                   type: boolean
+ *                 isSensitive:
+ *                   type: boolean
+ *       responses:
+ *         '201':
+ *           description: Blog created successfully
+ *         '401':
+ *           description: Unauthorized Request
+ *         '500':
+ *           description: Internal Server Error`
+ */
 bRouter.post("/create", authMiddleware, controller.create);
 
 /**
@@ -52,7 +98,11 @@ bRouter.post("/create", authMiddleware, controller.create);
  *       '500':
  *         description: Internal server error.
  */
-bRouter.patch("/update/:title", controller.updateByTitle);
+bRouter.patch(
+  "/update/:title",
+  StringParamValidationMiddleware.checkStringParams("title"),
+  controller.updateByTitle
+);
 
 /**
  * @swagger
@@ -78,7 +128,7 @@ bRouter.patch("/update/:title", controller.updateByTitle);
  *       '500':
  *         description: Internal server error.
  */
-bRouter.get("/getbyid/:id", controller.getById);
+bRouter.get("/getbyid/:id", paramValidationMiddleware, controller.getById);
 
 /**
  * @swagger
@@ -104,7 +154,11 @@ bRouter.get("/getbyid/:id", controller.getById);
  *       '500':
  *         description: Internal server error.
  */
-bRouter.get("/getbycategories/:categories", controller.getByCategory);
+bRouter.get(
+  "/getbycategories/:categories",
+  StringParamValidationMiddleware.checkStringParams("categories"),
+  controller.getByCategory
+);
 
 /**
  * @swagger
@@ -130,7 +184,11 @@ bRouter.get("/getbycategories/:categories", controller.getByCategory);
  *       '500':
  *         description: Internal server error.
  */
-bRouter.get("/search/:value", controller.search);
+bRouter.get(
+  "/search/:value",
+  StringParamValidationMiddleware.checkStringParams("value"),
+  controller.search
+);
 
 /**
  * @swagger
@@ -156,7 +214,12 @@ bRouter.get("/search/:value", controller.search);
  *       '500':
  *         description: Internal server error.
  */
-bRouter.delete("/:id", authMiddleware, controller.delete);
+bRouter.delete(
+  "/:id",
+  paramValidationMiddleware,
+  authMiddleware,
+  controller.delete
+);
 
 /**
  * @swagger
@@ -190,9 +253,40 @@ bRouter.delete("/:id", authMiddleware, controller.delete);
  *         description: Internal server error.
  */
 
-bRouter.patch("/updatebyid/:id", authMiddleware, controller.update);
+bRouter.patch(
+  "/updatebyid/:id",
+  paramValidationMiddleware,
+  authMiddleware,
+  controller.update
+);
 
 const upload = multer({ dest: "uploads/" });
+
+/**
+ * @swagger
+ * /blogs/bulk-upload:
+ *     post:
+ *       tags:
+ *         - "Bulk upload a blog"
+ *       summary: Create a new blogs
+ *       requestBody:
+ *        required: true
+ *        content:
+ *         multipart/form-data:
+ *          schema:
+ *           type: object
+ *           properties:
+ *            file:
+ *             type: string
+ *             format: binary
+ *       responses:
+ *        '201':
+ *          description: Blog created successfully
+ *        '401':
+ *          description: Unauthorized Request
+ *        '500':
+ *          description: Internal Server Error`
+ */
 
 bRouter.post(
   "/bulk-upload",

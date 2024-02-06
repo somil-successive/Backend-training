@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import Service from "./Service";
 import SystemResponse from "../../libs/config/SystemResponse";
 import fs from "fs";
-import IBulkUpload from "./entity/IBulkUpload";
 import IBulkError from "./entity/IBulkErrors";
 import BulkUpload from "./repositories/BulkUploadModel";
 import BulkErrorDetail from "./repositories/BulkErrorModel";
@@ -11,14 +10,26 @@ import Papa from "papaparse";
 import { blogShema } from "./validation";
 import { model } from "./repositories/Schema";
 import createHttpError from "http-errors";
+import logger from "../../utils/logger";
+import {
+  handleRemainingData,
+  transformRowData,
+} from "../../utils/paarserHelper";
 
 //eslint-disable-next-line
 
 class Controller {
   private service = new Service();
 
-  public getAll = async (req: Request, res: Response): Promise<void> => {
-    const { page, limit } = req.query;
+  public getAll = async (req: Request, res: Response) => {
+    logger.info("Blogs Controller -  getAll");
+    //eslint-disable-next-line
+    const { page, limit }: any = req.query;
+    if (page || limit) {
+      if (isNaN(page) || isNaN(limit)) {
+        return res.status(406).send("invalid page or limit");
+      }
+    }
     const pageNumber: number = page ? parseInt(String(page), 10) || 1 : 1;
     const limitNumber: number = limit ? parseInt(String(limit), 10) : 10;
     const skip: number = (pageNumber - 1) * limitNumber;
@@ -40,6 +51,8 @@ class Controller {
 
   public create = async (req: Request, res: Response): Promise<void> => {
     try {
+      logger.info("Blogs Controller -  create");
+
       const data = req.body;
       //eslint-disable-next-line
       const msg: any = await this.service.create(data);
@@ -54,6 +67,8 @@ class Controller {
         );
       }
     } catch (err) {
+      logger.info("Error Blogs Controller -  create");
+
       res.status(406).json({ error: err });
     }
   };
@@ -84,9 +99,16 @@ class Controller {
 
   public getByCategory = async (req: Request, res: Response) => {
     try {
-      const { page, limit } = req.query;
+      //eslint-disable-next-line
+      const { page, limit }: any = req.query;
+      if (page || limit) {
+        if (isNaN(page) || isNaN(limit)) {
+          return res.status(406).send("invalid page or limit");
+        }
+      }
       const pageNumber: number = page ? parseInt(String(page), 10) || 1 : 1;
       const limitNumber: number = limit ? parseInt(String(limit), 10) : 10;
+
       const skip: number = (pageNumber - 1) * limitNumber;
 
       const { categories } = req.params;
@@ -127,7 +149,14 @@ class Controller {
   };
   public search = async (req: Request, res: Response) => {
     try {
-      const { page, limit } = req.query;
+      //eslint-disable-next-line
+      const { page, limit }: any = req.query;
+
+      if (page || limit) {
+        if (isNaN(page) || isNaN(limit)) {
+          return res.status(406).send("invalid page or limit");
+        }
+      }
       const pageNumber: number = page ? parseInt(String(page), 10) || 1 : 1;
       const limitNumber: number = limit ? parseInt(String(limit), 10) : 10;
       const skip: number = (pageNumber - 1) * limitNumber;
@@ -183,7 +212,6 @@ class Controller {
   public bulkUpload = async (req: Request, res: Response) => {
     try {
       const csvFile: Express.Multer.File | undefined = req.file;
-
       const session_id: string = uuidv4();
       const startTime = Date.now();
       const batchSize = 10000;
@@ -193,57 +221,12 @@ class Controller {
       let batchData: any[] = [];
       //eslint-disable-next-line
       let bulkUploadErrors: any[] = [];
-      //eslint-disable-next-line
-      const transformRowData = (obj: any) => {
-        const result = {};
-
-        for (const key in obj) {
-          const keys = key.split(".");
-          // eslint-disable-next-line
-          let currentObj: any = result;
-
-          for (let i = 0; i < keys.length - 1; i++) {
-            currentObj[keys[i]] = currentObj[keys[i]] || {};
-            currentObj = currentObj[keys[i]];
-          }
-
-          currentObj[keys[keys.length - 1]] = obj[key];
-        }
-
-        return result;
-      };
-
       if (!csvFile) {
         return res.send("No file selected");
       }
 
       const filePath = csvFile.path;
       const readStream = fs.createReadStream(filePath);
-
-      const handleRemainingData = async () => {
-        if (bulkUploadErrors.length > 0) {
-          await BulkErrorDetail.bulkWrite(bulkUploadErrors, { ordered: false });
-          bulkUploadErrors = [];
-        }
-
-        if (batchData.length > 0) {
-          await model.bulkWrite(batchData, { ordered: false });
-          batchData = [];
-        }
-
-        const endTime = Date.now();
-        const bulkUploadRecord: IBulkUpload = {
-          recordsProcessed: recordsProcessCount,
-          totalErrors: errorCount,
-          timeTaken: (endTime - startTime) / 1000,
-          session_id: session_id,
-        };
-
-        await BulkUpload.bulkWrite(
-          [{ insertOne: { document: bulkUploadRecord } }],
-          { ordered: false }
-        );
-      };
 
       Papa.parse(readStream, {
         header: true,
@@ -297,11 +280,31 @@ class Controller {
           }
         },
         complete: async () => {
-          await handleRemainingData();
+          await handleRemainingData(
+            bulkUploadErrors,
+            BulkErrorDetail,
+            batchData,
+            model,
+            recordsProcessCount,
+            errorCount,
+            startTime,
+            session_id,
+            BulkUpload
+          );
           res.send("Processing completed");
         },
         error: async () => {
-          await handleRemainingData();
+          await handleRemainingData(
+            bulkUploadErrors,
+            BulkErrorDetail,
+            batchData,
+            model,
+            recordsProcessCount,
+            errorCount,
+            startTime,
+            session_id,
+            BulkUpload
+          );
           res.status(500).json({ error: "Internal server error" });
         },
       });

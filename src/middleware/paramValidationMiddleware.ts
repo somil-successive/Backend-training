@@ -1,17 +1,22 @@
 import { Request, Response, NextFunction } from "express";
-import createError from "http-errors";
+import { isValidObjectId } from "mongoose";
 class ParamValidationMiddleware {
   paramValidationMiddleware = (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
-    const { id } = req.query;
-    if (!Number(id)) {
-      return next(createError(406, "Not Valid Params"));
-     
+    try {
+      const { id } = req.params;
+
+      if (isValidObjectId(id)) {
+        next();
+      } else {
+        res.status(406).send("not valid mongoose id");
+      }
+    } catch (error) {
+      res.status(404).send(error);
     }
-    next();
   };
 }
 export default new ParamValidationMiddleware().paramValidationMiddleware;

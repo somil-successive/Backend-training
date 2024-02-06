@@ -8,7 +8,7 @@ const schema = new mongoose.Schema<IBlogs>(
       required: true,
     },
     body: {
-      description: { type: String, required: true },
+      description: { type: String},
       links: { type: String },
     },
     imageUrl: { type: String },
@@ -26,6 +26,8 @@ const schema = new mongoose.Schema<IBlogs>(
       required: true,
     },
     tags: { type: String },
+    createdBy: { type: String },
+    updatedBy: { type: String },
     writer: {
       id: { type: String },
       name: { type: String },

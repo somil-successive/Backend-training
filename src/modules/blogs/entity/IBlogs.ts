@@ -1,15 +1,17 @@
 export interface IBlogs {
   title: string;
   body: {
-    description:string,
-    links:string
-  },
+    description: string;
+    links: string;
+  };
   likes: number;
-  approved : boolean,
+  approved: boolean;
   imageUrl: string;
   categories: string;
   isSensitive: boolean;
-  tags:string;
+  tags: string;
+  createdBy: string;
+  updatedBy: string;
 
   writer: {
     id: number;

@@ -22,6 +22,7 @@ class Repo extends BaseRepo<IBlogs> {
   ): Promise<IBlogs[]> => {
     return await model
       .find({ categories: { $in: categories } })
+      .select(["title", "imageUrl", "categories", "body.description"])
       .skip(skip)
       .limit(limit);
   };
@@ -45,6 +46,7 @@ class Repo extends BaseRepo<IBlogs> {
           { tags: { $regex: value, $options: "i" } },
         ],
       })
+      .select(["title", "imageUrl", "categories", "body.description"])
       .skip(skip)
       .limit(limit);
   };
